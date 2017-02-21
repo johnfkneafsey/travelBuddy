@@ -11,6 +11,9 @@
   "author": "Joe Turner <jturner@thinkful.com>",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.16.1",
+    "jsonparser": "^1.0.1",
+    "mongoose": "^4.8.4",
     "npm-run-all": "^4.0.1"
   }
 }
