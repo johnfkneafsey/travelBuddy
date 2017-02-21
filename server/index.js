@@ -6,6 +6,8 @@ const BearerStrategy = require('passport-http-bearer').Strategy;
 const config = require('./config');
 const secret = require('./secret');
 
+console.log(secret);
+
 const app = express();
 
 const database = {
@@ -21,7 +23,7 @@ app.use(passport.initialize());
 
 passport.use(
     new GoogleStrategy({
-        clientID:  '689026946763-rtsrhg52nra9oai4tk7gb05fs8f1t43l.apps.googleusercontent.com',
+        clientID:  '634338731171-p1fa27i543iqh7bumg3git2r5iu15cug.apps.googleusercontent.com',
         clientSecret: secret,
         callbackURL: `${config.ROOT}/auth/google/callback`
     },
