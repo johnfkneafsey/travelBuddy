@@ -3,7 +3,11 @@ import * as Cookies from 'js-cookie';
 
 import QuestionPage from './question-page';
 import LoginPage from './login-page';
+import TopNav from './topNav';
+import AnswerInput from './answer-input';
 import {SERVER_ROOT} from '../config';
+
+
 
 class App extends React.Component {
     constructor(props) {
@@ -44,7 +48,13 @@ class App extends React.Component {
             return <LoginPage />;
         }
 
-        return <QuestionPage />;
+        return (
+            <div>
+                <TopNav />,
+                <QuestionPage />,
+                <AnswerInput />
+            </div>
+        )
     }
 }
 

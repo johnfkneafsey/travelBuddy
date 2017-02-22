@@ -7,8 +7,9 @@ const bodyParser = require('body-parser');
 const { User } = require('./models');
 const config = require('./config');
 const secret = require('./secret');
-
+var findOrCreate = require('mongoose-findorcreate')
 console.log(secret);
+
 
 const app = express();
 mongoose.Promise = global.Promise;
@@ -16,6 +17,7 @@ const jsonParser = bodyParser.json();
 
 const database = {
 };
+console.log('THIS IS THE DATABASE', database)
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', config.CLIENT_ROOT);
@@ -33,38 +35,48 @@ passport.use(
     },
     (accessToken, refreshToken, profile, cb) => {
 
-      console.log('cb', cb);
-        console.log('searching for user');
-        //let user;
 
+// Job 1: Set up Mongo/Mongoose, create a User model which store the
+// google id, and the access token
+// Job 2: Update this callback to either update or create the user
+// so it contains the correct access token
+        console.log(profile.name+ 'profile');
         User
             .find({googleId: profile.id}, (err, results) => {
                 if (err) {
                     console.log(err);
                 }
                 if (!results.length) {
-                    console.log('need to create');
+                    console.log('Creating a new user');
+                    var newUser = {
+                        googleId: profile.id,
+                        accessToken: accessToken,
+                        name: profile.displayName
+                        }
+                User
+                    .create(newUser)
+                    .then(res => {
+                        console.log('successfully created new user. Response: ', res);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+                }
+                else {
+                    console.log('Updating accessToken for the existing user');
+                    User
+                        .updateOne({"googleId" : profile.id}, {$set:{accessToken : accessToken}
+                        })
+                        .then(res => { 
+                        console.log("Successfully updated token. Response: ", res );
+
+                    }) 
                 }
             })
             .exec()
             .then(res => {
-                console.log('response _ID ----------',res[0]._id);
-
-                if (res[0].googleId) {
-                    console.log('if statement')
-                User
-                    .updateOne({_id: res[0]._id},
-                        {$set: {accessToken: accessToken}}
-                    )
-                    .exec()
-                    .then(res => {
-                        console.log(res);
-                    })}})
-                    //db.restaurants.updateOne( {_id: myId}, {$set: {name: 'Bizz Bar Bang'}});
-                        // update token
-                        // user = response;
-                    //  console.log('user variable', user);
-                //     console.log('response from google log in; ', res);
+                console.log(res);
+            })
             .catch(err => {
                 console.log(err);
             })
@@ -74,15 +86,6 @@ passport.use(
             accessToken: accessToken
         };
 
-        // datebase {
-        //     token#: {
-        //         googleId: profile.id,
-        //         accessToken: accessToken
-        //     }
-        // }
-
-        console.log(user, 'user object');
-
         return cb(null, user);
     }
 ));
@@ -90,6 +93,34 @@ passport.use(
 passport.use(
     new BearerStrategy(
         (token, done) => {
+// Job 3: Update this callback to try to find a user with a 
+// matching access token.  If they exist, let em in, if not,
+// don't.
+        User.findOne({accessToken: token}, function(err,user){
+            if(err){
+                console.log('ERROR WITH BEARER ',err);
+                return done(err);
+            }
+            if(!user){
+              console.log('NO USER FOUND IN BEARER')
+              return done(null, false)
+            }
+            else {
+             console.log('USER FOUND IN BEARER '. user)
+             return done(null, user, {scope: 'all'})
+            }
+        })
+        // do we need this stuff below??? maybe send response code?
+        .exec()
+        .then(res => {
+            console.log('BEARER STRATEGY RESPONSE', res);
+
+        })
+        .catch(err => {
+            console.log(err);
+        })
+
+           console.log(token + 'token in Database' + database);
             if (!(token in database)) {
                 return done(null, false);
             }
@@ -97,7 +128,8 @@ passport.use(
         }
     )
 );
-//what does data look like? how to do we grab and manipulate?
+
+
 
 app.get('/auth/google',
     passport.authenticate('google', {scope: ['profile']}));
@@ -139,6 +171,7 @@ app.post('/users', jsonParser, (req, res) => {
         .create({
             googleId: req.body.googleId,
             accessToken: req.body.accessToken,
+            email: req.body.email,
             name: req.body.name
         })
         .then(response => {

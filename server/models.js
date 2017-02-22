@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+var findOrCreate = require('mongoose-findorcreate')
 
 var userSchema = mongoose.Schema({
     googleId: {type: String, required: true},
@@ -6,6 +7,8 @@ var userSchema = mongoose.Schema({
     email: String,
     name: String
 });
+
+userSchema.plugin(findOrCreate);
 
 userSchema.methods.apiRepr = function () {
     return {
