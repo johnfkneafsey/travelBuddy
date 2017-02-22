@@ -7,8 +7,6 @@ const bodyParser = require('body-parser');
 const { User } = require('./models');
 const config = require('./config');
 const secret = require('./secret');
-var findOrCreate = require('mongoose-findorcreate')
-
 
 const app = express();
 mongoose.Promise = global.Promise;
@@ -84,6 +82,7 @@ passport.use(
                 console.log(err);
             })
 
+        // do we need this or can we return like we do in bearer strategy? 
         const user = database[accessToken] = {
             googleId: profile.id,
             accessToken: accessToken
