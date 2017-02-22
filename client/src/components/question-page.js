@@ -12,6 +12,7 @@ export default class QuestionPage extends React.Component {
 
     componentDidMount() {
         const accessToken = Cookies.get('accessToken');
+        
         fetch(`${SERVER_ROOT}/api/questions`, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`

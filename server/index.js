@@ -4,7 +4,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const BearerStrategy = require('passport-http-bearer').Strategy;
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const { User } = require('./models');
+const { User, Question } = require('./models');
 const config = require('./config');
 const secret = require('./secret');
 
@@ -25,6 +25,20 @@ app.use(function(req, res, next) {
 
 app.use(passport.initialize());
 
+
+
+function questionHistory() {
+     Question
+        .find()
+        .exec()
+        .then(res => {
+            return res;
+        })
+}
+
+
+
+
 passport.use(
     new GoogleStrategy({
         clientID:  '634338731171-p1fa27i543iqh7bumg3git2r5iu15cug.apps.googleusercontent.com',
@@ -41,16 +55,31 @@ passport.use(
         // so it contains the correct access token
 
        // console.log(profile.name+ 'profile');
+       let questionHistory = [];
+
+        Question
+            .find()
+            .exec()
+            .then(res => {
+//                console.log('QUESTION RESPONSE  ',res);
+                questionHistory = res;
+            })
+
+
+
+
 
         User
             .findOne({googleId: profile.id}) 
             .exec()
             .then(user => {
                 if (!user) {
-                    console.log('Creating a new user');
+  //                  console.log('QUESTION HISTORY  ', questionHistory())
+   //                 console.log('Creating a new user');
                     var newUser = {
                         googleId: profile.id,
                         accessToken: accessToken,
+                        questionHistory: questionHistory,
                         name: profile.displayName
                     }
                     return User
@@ -93,21 +122,6 @@ passport.use(
                 return cb(null, user, {scope: 'all'})
             }
         })
-        // do we need this stuff below??? maybe send response code?
-        // .exec()
-        // .then(res => {
-        //     console.log('BEARER STRATEGY RESPONSE', res);
-
-        // })
-        // .catch(err => {
-        //     console.log(err);
-        // })
-
-        //    console.log(token + 'token in Database' + database);
-        //     if (!(token in database)) {
-        //         return cb(null, false);
-        //     }
-        //     return cb(null, database[token]);
         }
     )
 );
@@ -151,17 +165,17 @@ app.get('/api/questions',
     }
 );
 
-//remove this
-app.post('/users', jsonParser, (req, res) => {
+
+app.post('/questions', jsonParser, (req, res) => {
     console.log('endpoint reached', req.body);
-    User
+    Question
         .create({
-            googleId: req.body.googleId,
-            accessToken: req.body.accessToken,
-            email: req.body.email,
-            name: req.body.name
+            question: req.body.question,
+            answer: req.body.answer,
+            mValue: req.body.mValue
         })
         .then(response => {
+            console.log('RESPONSE OBJECT (QUESTIONS ADDED)', response)
             res.status(201).json(response.apiRepr())
         })
         .catch(err => {
