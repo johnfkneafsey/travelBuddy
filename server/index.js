@@ -40,77 +40,57 @@ passport.use(
         // Job 2: Update this callback to either update or create the user
         // so it contains the correct access token
 
-        console.log(profile.name+ 'profile');
+       // console.log(profile.name+ 'profile');
 
         User
-            .find({googleId: profile.id}, (err, results) => {
-                if (err) {
-                    console.log(err);
-                }
-                if (!results.length) {
+            .findOne({googleId: profile.id}) 
+            .exec()
+            .then(user => {
+                if (!user) {
                     console.log('Creating a new user');
                     var newUser = {
                         googleId: profile.id,
                         accessToken: accessToken,
                         name: profile.displayName
-                        }
-                User
-                    .create(newUser)
-                    .then(res => {
-                        console.log('successfully created new user. Response: ', res);
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })
+                    }
+                    return User
+                        .create(newUser)
                 }
                 else {
                     console.log('Updating accessToken for the existing user');
-                    User
-                        .updateOne({"googleId" : profile.id}, {$set:{accessToken : accessToken}
-                        })
-                        .then(res => { 
-                        console.log("Successfully updated token. Response: ", res );
-
-                    }) 
+                    return User
+                        .findOneAndUpdate({"googleId" : profile.id}, {$set:{accessToken : accessToken}}, {new: true})
                 }
-            })
-            .exec()
-            .then(res => {
-                console.log(res);
+            })             
+            .then(user => {
+                console.log('USER ',user)
+                return cb(null, user)
             })
             .catch(err => {
                 console.log(err);
             })
-
-        // do we need this or can we return like we do in bearer strategy? 
-        const user = database[accessToken] = {
-            googleId: profile.id,
-            accessToken: accessToken
-        };
-
-        return cb(null, user);
     }
 ));
 
 passport.use(
     new BearerStrategy(
-        (token, cb) => {
+        (accessToken, cb) => {
         // Job 3: Update this callback to try to find a user with a 
         // matching access token.  If they exist, let em in, if not,
         // don't.
-        User.findOne({accessToken: token}, function(err,user){
+        User.findOne({accessToken: accessToken}, function(err,user){
             if(err){
                 console.log('ERROR WITH BEARER ');
                 return cb(err);
             }
             if(!user){
-              console.log('NO USER FOUND IN BEARER')
-              return cb(null, false)
+                console.log('NO USER FOUND IN BEARER')
+                return cb(null, false)
             }
             else {
-             console.log('USER FOUND IN BEARER ')
-             console.log(user);
-             return cb(null, user, {scope: 'all'})
+                console.log('USER FOUND IN BEARER ')
+                console.log(user);
+                return cb(null, user, {scope: 'all'})
             }
         })
         // do we need this stuff below??? maybe send response code?
