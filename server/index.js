@@ -8,7 +8,6 @@ const { User } = require('./models');
 const config = require('./config');
 const secret = require('./secret');
 var findOrCreate = require('mongoose-findorcreate')
-console.log(secret);
 
 
 const app = express();
@@ -17,6 +16,7 @@ const jsonParser = bodyParser.json();
 
 const database = {
 };
+
 console.log('THIS IS THE DATABASE', database)
 
 app.use(function(req, res, next) {
@@ -36,11 +36,14 @@ passport.use(
     (accessToken, refreshToken, profile, cb) => {
 
 
-// Job 1: Set up Mongo/Mongoose, create a User model which store the
-// google id, and the access token
-// Job 2: Update this callback to either update or create the user
-// so it contains the correct access token
+        // Job 1: Set up Mongo/Mongoose, create a User model which store the
+        // google id, and the access token
+
+        // Job 2: Update this callback to either update or create the user
+        // so it contains the correct access token
+
         console.log(profile.name+ 'profile');
+
         User
             .find({googleId: profile.id}, (err, results) => {
                 if (err) {
@@ -92,39 +95,40 @@ passport.use(
 
 passport.use(
     new BearerStrategy(
-        (token, done) => {
-// Job 3: Update this callback to try to find a user with a 
-// matching access token.  If they exist, let em in, if not,
-// don't.
+        (token, cb) => {
+        // Job 3: Update this callback to try to find a user with a 
+        // matching access token.  If they exist, let em in, if not,
+        // don't.
         User.findOne({accessToken: token}, function(err,user){
             if(err){
-                console.log('ERROR WITH BEARER ',err);
-                return done(err);
+                console.log('ERROR WITH BEARER ');
+                return cb(err);
             }
             if(!user){
               console.log('NO USER FOUND IN BEARER')
-              return done(null, false)
+              return cb(null, false)
             }
             else {
-             console.log('USER FOUND IN BEARER '. user)
-             return done(null, user, {scope: 'all'})
+             console.log('USER FOUND IN BEARER ')
+             console.log(user);
+             return cb(null, user, {scope: 'all'})
             }
         })
         // do we need this stuff below??? maybe send response code?
-        .exec()
-        .then(res => {
-            console.log('BEARER STRATEGY RESPONSE', res);
+        // .exec()
+        // .then(res => {
+        //     console.log('BEARER STRATEGY RESPONSE', res);
 
-        })
-        .catch(err => {
-            console.log(err);
-        })
+        // })
+        // .catch(err => {
+        //     console.log(err);
+        // })
 
-           console.log(token + 'token in Database' + database);
-            if (!(token in database)) {
-                return done(null, false);
-            }
-            return done(null, database[token]);
+        //    console.log(token + 'token in Database' + database);
+        //     if (!(token in database)) {
+        //         return cb(null, false);
+        //     }
+        //     return cb(null, database[token]);
         }
     )
 );
@@ -154,17 +158,21 @@ app.get('/auth/logout', (req, res) => {
 
 app.get('/api/me',
     passport.authenticate('bearer', {session: false}),
-    (req, res) => res.json({
-        googleId: req.user.googleId
-    })
+    (req, res) => {
+        console.log('reached /api/me endpoint through bearer strategy')
+        res.json({googleId: req.user.googleId})
+    }
 );
 
 app.get('/api/questions',
     passport.authenticate('bearer', {session: false}),
-    (req, res) => res.json(['Question 1', 'Question 2'])
+    (req, res) => {
+        console.log('reached /api/questions endpoint through bearer strategy')
+        res.json(['Question 1', 'Question 2'])
+    }
 );
 
-
+//remove this
 app.post('/users', jsonParser, (req, res) => {
     console.log('endpoint reached', req.body);
     User
