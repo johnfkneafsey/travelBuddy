@@ -17,8 +17,8 @@ export class AnswerInput extends React.Component {
 
   render() {
     return (
-      <div>
-        <h3>What do you think?</h3>
+      <div className="english">
+        <h3>...in English?</h3>
         <form onSubmit={this.submitAnswer}>
           <input type="text" placeholder="Enter an answer" ref={ref => this.userGuess = ref} />
           <button>Submit</button>

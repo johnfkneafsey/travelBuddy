@@ -34,9 +34,12 @@ export default class QuestionPage extends React.Component {
         );
 
         return (
+            <div>
+            <h3> In Latin</h3>
             <ul className="question-list">
                 {questions}
             </ul>
+            </div>    
         );
     }
 }
