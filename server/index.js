@@ -161,7 +161,8 @@ app.get('/api/questions',
     passport.authenticate('bearer', {session: false}),
     (req, res) => {
         console.log('reached /api/questions endpoint through bearer strategy')
-        res.json(['Question 1', 'Question 2'])
+        console.log('REQUEST OBJECT ', req.user)
+        res.json(req.user);
     }
 );
 
