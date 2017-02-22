@@ -10,9 +10,8 @@ export class AnswerInput extends React.Component {
   }
 
   submitAnswer(e) {
-    // e.preventDefault();
-    // let userGuess = this.userGuess.value;
-    // this.props.dispatch(actions.guessNumber(userGuess));
+     e.preventDefault();
+     let userGuess = this.userGuess.value;
   }
 
   render() {
