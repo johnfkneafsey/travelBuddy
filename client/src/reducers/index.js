@@ -9,19 +9,24 @@ const initialState = {
     _id: '',
     googleId: '',
     accessToken: '',
-    questionHistory: '',
+    questionHistory: 'hello',
     email: '',
     name: '',
     sessionHistory: {
         questions: 0,
         correctAnswers: 0
     },
-    answerHistory: ''   
+    answerHistory: {
+        questions: 0,
+        correctAnswers: 0
+    } 
 }
 
 export const mainReducer = (state= initialState, action) => {
     if (action.type === actions.MAP_USER_TO_STORE) {
         setTimeout(()=> { console.log(store.getState(), "THIS IS THE MAP_USER_TO_STORE GETSTATE()")}, 3000);
+        console.log('QUESTION HISTORY IN REDUCER ', action.userData.questionHistory);
+        console.log('QUESTION HISTORY IN REDUCER  QUESTION ', action.userData.questionHistory[0].question);
         return update(state, {
             _id: {$set: action.userData._id},
             googleId: {$set: action.userData.googleId},
@@ -43,11 +48,10 @@ export const mainReducer = (state= initialState, action) => {
     }
 
     
-
     if (action.type === actions.INCREMENT_QUESTION_COUNT) {
         setTimeout(()=> { console.log(store.getState(), "THIS IS THE INCREMENT_QUESTION_COUNT GETSTATE()")}, 3000);
         return update(state, {
-            questionHistory: {
+            answerHistory: {
                 questions: {$apply: function(x) {return x + 1}}},
             sessionHistory: {
                 questions: {$apply: function(x) {return x + 1}}}
@@ -57,12 +61,20 @@ export const mainReducer = (state= initialState, action) => {
     if (action.type === actions.INCREMENT_CORRECT_COUNT) {
         setTimeout(()=> { console.log(store.getState(), "THIS IS THE INCREMENT_CORRECT_COUNT GETSTATE()")}, 3000);
         return update(state, {
-            questionHistory: {
+            answerHistory: {
                 correctAnswers: {$apply: function(x) {return x + 1}}},
             sessionHistory: {
                 correctAnswers: {$apply: function(x) {return x + 1}}}
         })
     }
+
+    // onSubmit() {
+    //     dispatch INCREMENT_QUESTION_COUNT
+    //     dispatch SUBMIT_USER_ANSWER_TO_ALGO
+    //      if (userInput === this.props.questionHistory[0].answer) {
+    //         dispatch incrementCorrectCount
+    //     }
+    // }
 
 
 

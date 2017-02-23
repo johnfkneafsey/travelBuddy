@@ -24,8 +24,8 @@ export class QuestionPage extends React.Component {
             }
             return res.json();
         }).then(userData =>
-        console.log('USER DATA WE NEED THIS TO DEEP COPY ', userData)
-        //    this.props.dispatch(actions.mapUserToStore(userData))
+       // console.log('USER DATA WE NEED THIS TO DEEP COPY ', userData.questionHistory[0].question)
+           this.props.dispatch(actions.mapUserToStore(userData))
             )
         }
 
@@ -38,18 +38,21 @@ export class QuestionPage extends React.Component {
         //why does this work?
         //console.log('THIS IS ANSWER HISTORY ', this.props.answerHistory.questions);
         //but not this?
-        //setTimeout(console.log('THIS IS THE QUESTION HISTORY first question STRUNG OUT ', JSON.parse(this.props.questionHistory[0].question)), 3000)
+        //console.log('THIS IS THE QUESTION HISTORY  ', this.props.questionHistory[0].question)
+       // console.log('THIS IS THE QUESTION HISTORY  ', Object.keys(this.props.questionHistory[0].question))
+        //[0].question)
 
         // if (this.props.questionHistory[0].question) {
         //     const currentQuestion = this.props.questionHistory[0].question;
         //     console.log('LOGGING THE CURRENT QUESTION ', currentQuestion);
         // }
 
+        let question = this.props.questionHistory[0].question;
 
 
         return (
             <ul className="question-list">
-
+                {question}
             </ul>
         );
     }

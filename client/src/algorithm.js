@@ -1,5 +1,5 @@
 export const insertionSort = (arr) => {
-  for (i = 1; i < arr.length; i++) {
+  for (let i = 1; i < arr.length; i++) {
       var tmp = arr[i],
       j = i;
       while (j > 0 && arr[j-1].mValue >= tmp.mValue) {

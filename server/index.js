@@ -64,10 +64,6 @@ passport.use(
                 questionHistory = res;
             })
 
-
-
-
-
         User
             .findOne({googleId: profile.id}) 
             .exec()

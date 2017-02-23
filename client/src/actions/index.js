@@ -4,10 +4,16 @@ import store from '../store'
 
 // After answer is submitted
 // -dispatch submitUserAnswerToAlgo(userAnswer, questionHistory) questionHistory will be this.props.questionHistory. It should be an array of objects (question,answer,mValue)
+// this.props.dispatch(action.submitUserAnswerToAlgo(userinput, this.props.questionHistory))
+
+
 // After answer is submitted
 //  -dispatch incrementQuestionCount()
 // If correct answer is submitted
-//    if (userInput === this.props.questionHistory[0].question) {
+
+
+
+//    if (userInput === this.props.questionHistory[0].answer) {
 //          dispatch incrementCorrectCount()
 //    }
 
