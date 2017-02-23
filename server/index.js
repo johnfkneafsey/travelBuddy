@@ -61,27 +61,25 @@ passport.use(
             .find()
             .exec()
             .then(res => {
-//                console.log('QUESTION RESPONSE  ',res);
                 questionHistory = res;
             })
-
-
-
-
 
         User
             .findOne({googleId: profile.id}) 
             .exec()
             .then(user => {
                 if (!user) {
-  //                  console.log('QUESTION HISTORY  ', questionHistory())
-   //                 console.log('Creating a new user');
                     var newUser = {
                         googleId: profile.id,
                         accessToken: accessToken,
                         questionHistory: questionHistory,
-                        name: profile.displayName
+                        name: profile.displayName,
+                        answerHistory: {
+                            questions: 0,
+                            correctAnswers: 0
+                        } 
                     }
+                    console.log('NEW USER ', newUser)
                     return User
                         .create(newUser)
                 }
@@ -144,6 +142,14 @@ app.get('/auth/google/callback',
 );
 
 app.get('/auth/logout', (req, res) => {
+    req.logout();
+    res.clearCookie('accessToken');
+    res.redirect('/');
+});
+
+app.put('/auth/logout', (req, res) => {
+    //Users update....
+
     req.logout();
     res.clearCookie('accessToken');
     res.redirect('/');

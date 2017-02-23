@@ -10,7 +10,11 @@ var userSchema = mongoose.Schema({
         mValue: Number
     }],
     email: String,
-    name: String
+    name: String,
+    answerHistory: {
+        questions: Number,
+        correctAnswers: Number
+    }
 });
 
 
@@ -21,7 +25,8 @@ userSchema.methods.apiRepr = function () {
         accessToken: this.accessToken,
         questionHistory: this.questionHistory,
         email: this.email,
-        name: this.name       
+        name: this.name,
+        answerHistory: this.answerHistory       
     }
 }
 
