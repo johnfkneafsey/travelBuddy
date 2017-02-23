@@ -1,5 +1,5 @@
 import store from '../store'
-
+import fetch from 'isomorphic-fetch';
 // Unused actions
 
 // After answer is submitted
@@ -29,21 +29,41 @@ export const mapUserToStore = (userData) => ({
 export const SUBMIT_USER_ANSWER_TO_ALGO = 'SUBMIT_USER_ANSWER_TO_ALGO';
 export const submitUserAnswerToAlgo = (questionHistory, userAnswer) => ({
 	type: SUBMIT_USER_ANSWER_TO_ALGO,
-    questionData: questionHistory,
+    questionHistory: questionHistory,
     userAnswer: userAnswer
 })
 
 export const INCREMENT_QUESTION_COUNT = 'INCREMENT_QUESTION_COUNT';
 export const incrementQuestionCount = () => ({
-	type: INCREMENT_QUESTION_COUNT,
+	type: INCREMENT_QUESTION_COUNT
 })
 
-export const INCREMENT_CORRECT_COUNT = 'MAP_USER_TO_STORE';
+export const INCREMENT_CORRECT_COUNT = 'INCREMENT_CORRECT_COUNT';
 export const incrementCorrectCount = () => ({
-	type: INCREMENT_CORRECT_COUNT,
+	type: INCREMENT_CORRECT_COUNT
 })
 
 
+export const updateUserInDatabase = (userData) => dispatch => {
+	console.log('USER DATA PRE FETCH' ,userData);
+	return fetch('http://localhost:8080/api/logout', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({userData})
+	})
+	.then(res => {
+		if (!res.ok) {
+				throw new Error(res.statusText);
+		}
+		console.log('THIS IS BEING SENT TO LOG OUT ENDPOINT ');
+		return res.json({});
+	})
+	.catch(error => {
+		return error;
+	})
+}
 
 
 

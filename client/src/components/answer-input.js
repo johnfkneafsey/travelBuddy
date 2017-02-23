@@ -12,7 +12,16 @@ export class AnswerInput extends React.Component {
   submitAnswer(e) {
      e.preventDefault();
      let userGuess = this.userGuess.value;
-  }
+     this.props.dispatch(actions.incrementQuestionCount());
+     console.log('ANSWER ', this.props.questionHistory[0].answer);
+     if (userGuess === this.props.questionHistory[0].answer) {
+        alert(`Correct! The answer is ${this.props.questionHistory[0].answer}!`);
+        this.props.dispatch(actions.incrementCorrectCount());
+     } else {
+        alert(`Incorrect! The correct answer is ${this.props.questionHistory[0].answer}!`);
+     }
+     this.props.dispatch(actions.submitUserAnswerToAlgo(this.props.questionHistory, userGuess))
+}
 
   render() {
     return (
@@ -28,6 +37,13 @@ export class AnswerInput extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
+    _id: state._id,
+    googleId: state.googleId,
+    accessToken: state.accessToken,
+    questionHistory: state.questionHistory,
+    email: state.email,
+    name: state.name,
+    answerHistory: state.answerHistory  
 });
 
 export default connect(mapStateToProps)(AnswerInput);

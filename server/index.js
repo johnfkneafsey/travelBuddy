@@ -25,8 +25,6 @@ app.use(function(req, res, next) {
 
 app.use(passport.initialize());
 
-
-
 function questionHistory() {
      Question
         .find()
@@ -36,17 +34,13 @@ function questionHistory() {
         })
 }
 
-
-
-
 passport.use(
     new GoogleStrategy({
-        clientID:  '444740250195-l1ffmpv38gb4jebtladcmnlu6ab78fcn.apps.googleusercontent.com',
+        clientID:  '634338731171-p1fa27i543iqh7bumg3git2r5iu15cug.apps.googleusercontent.com',
         clientSecret: secret,
         callbackURL: `${config.ROOT}/auth/google/callback`
     },
     (accessToken, refreshToken, profile, cb) => {
-
 
         // Job 1: Set up Mongo/Mongoose, create a User model which store the
         // google id, and the access token
@@ -54,7 +48,6 @@ passport.use(
         // Job 2: Update this callback to either update or create the user
         // so it contains the correct access token
 
-       // console.log(profile.name+ 'profile');
        let questionHistory = [];
 
         Question
@@ -147,12 +140,8 @@ app.get('/auth/logout', (req, res) => {
     res.redirect('/');
 });
 
-app.put('/auth/logout', (req, res) => {
-    //Users update....
-
-    req.logout();
-    res.clearCookie('accessToken');
-    res.redirect('/');
+app.post('/api/logout', (req, res) => {
+    console.log(req.body)
 });
 
 app.get('/api/me',

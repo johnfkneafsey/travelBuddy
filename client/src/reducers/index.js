@@ -1,8 +1,8 @@
 import update from 'immutability-helper';
 import * as actions from '../actions/index';
 import store from '../store';
-import spacedAlgo from '../algorithm.js';
-import insertionSort from '../algorithm.js';
+import { spacedAlgo } from '../algorithm.js';
+import { insertionSort } from '../algorithm.js';
 
 
 const initialState = {
@@ -25,8 +25,8 @@ const initialState = {
 export const mainReducer = (state= initialState, action) => {
     if (action.type === actions.MAP_USER_TO_STORE) {
         setTimeout(()=> { console.log(store.getState(), "THIS IS THE MAP_USER_TO_STORE GETSTATE()")}, 3000);
-        console.log('QUESTION HISTORY IN REDUCER ', action.userData.questionHistory);
-        console.log('QUESTION HISTORY IN REDUCER  QUESTION ', action.userData.questionHistory[0].question);
+     //   console.log('QUESTION HISTORY IN REDUCER ', action.userData.questionHistory);
+     //   console.log('QUESTION HISTORY IN REDUCER  QUESTION ', action.userData.questionHistory[0].question);
         return update(state, {
             _id: {$set: action.userData._id},
             googleId: {$set: action.userData.googleId},
@@ -40,7 +40,11 @@ export const mainReducer = (state= initialState, action) => {
 
     if (action.type === actions.SUBMIT_USER_ANSWER_TO_ALGO) {
         setTimeout(()=> { console.log(store.getState(), "THIS IS THE SUBMIT_USER_ANSWER_TO_ALGO GETSTATE()")}, 3000);
+        console.log('THIS IS THE ACTION.QUESTHISTORY ', action.questionHistory)
+        console.log('THIS IS THE ACTION.USER ANSWER ', action.userAnswer)
+        
         let sortedquestionHistory = spacedAlgo(action.questionHistory, action.userAnswer)
+        console.log('THIS SHOULD BE A SORTED ARRAY ', sortedquestionHistory)
         // returns a sorted questionHistory array with updated mValue
         return update(state, {
             questionHistory: {$set: sortedquestionHistory}
@@ -90,40 +94,14 @@ export const mainReducer = (state= initialState, action) => {
 
 
 
-//serve question
-
-// Front end
-// [1,1,1,1,1,1,1,1,1]
-// --dispatch action to check input vs answer
-// --update m values accordingly using algorithm
-// -reorder by m value
-
-// implied 
-// [1,2,1,2,2,1,2,1,1]
-
-// reorder by m value
-// [1,1,1,1,2,2,2,2]
-
-// Backend
-// onClick logout
-// dispatch > update User.John = store;
-// dispatch > update User.john.questionHistory = store.questionHistory;
-
-
-// -Rendering state items in components (need order of questions)
-// -Correct or Incorrect component
-// -Frontend session counter - created action, just need to call
-//     -Set to 0 in initial state
-//     -On correct answer, dispatch action to increment sessionCounter
-// -Backend lifetime counter - created action, just need to call
-//     -Add correctCounter to schema, set to 0 by default for new userData
-//     -Map it over to the store 
-//     -On correct answer, dispatch action to increment correctCounter
-// -Algorithm
-//     -Do it
+// -Render items in components 
+//     -question, session questions, session correct answers, name, ...? answer, right/wrong (after submit)
+// -Answer input
+//     -dispatch question counter
+//     -dispatch algo action
+//     -dispatch correct counter (if correct)
 // -Update DB on logout    
 //     -dispatch async action (get or put)?
-
-
-
+//     -update user document in DB to reflect new mvalues and answerHistory
+// -Styling
 

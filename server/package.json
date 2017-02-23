@@ -15,6 +15,7 @@
     "body-parser": "^1.16.1",
     "express": "^4.14.1",
     "immutability-helper": "^2.1.1",
+    "isomorphic-fetch": "^2.2.1",
     "jsonparser": "^1.0.1",
     "mongoose": "^4.8.4",
     "mongoose-findorcreate": "^1.0.0",
