@@ -34,29 +34,33 @@ export class QuestionPage extends React.Component {
 
     render() {
 
-       // console.log('LOGGING THE ENTIRE STATE', this.props._id, this.props.googleId, this.props.accessToken, 'QUESTION HISTORY ', this.props.questionHistory, this.props.email, this.props.name, this.props.answerHistory) 
-        //why does this work?
-        //console.log('THIS IS ANSWER HISTORY ', this.props.answerHistory.questions);
-        //but not this?
-        //console.log('THIS IS THE QUESTION HISTORY  ', this.props.questionHistory[0].question)
-       // console.log('THIS IS THE QUESTION HISTORY  ', Object.keys(this.props.questionHistory[0].question))
-        //[0].question)
+            // <article className="flashcard">
+            // <input id="flashcard-1" type="checkbox" />
+            // <label for="flashcard-1">
+            //     <section className="front">
+            //     {question}
+            //     </section>
+                
+            //     <section className="back">
+            //     {answer}
+            //     </section>
+            // </label>
+            // </article>  
+            // </div>
 
-        // if (this.props.questionHistory[0].question) {
-        //     const currentQuestion = this.props.questionHistory[0].question;
-        //     console.log('LOGGING THE CURRENT QUESTION ', currentQuestion);
-        // }
 
         let question = this.props.questionHistory[0].question;
-
+        let answer = this.props.questionHistory[0].answer;
 
         return (
-            <div>
-            <h3> In Latin</h3>
-            <ul className="question-list">
-                {question}
-            </ul>
-            </div>    
+            
+            <div className="center">
+            <h3 className="latin">Latin</h3>
+            <div className="question-list card center">
+                <div className="question">{question}</div>
+            </div>
+            </div>
+            
         );
     }
 }

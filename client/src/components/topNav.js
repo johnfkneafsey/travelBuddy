@@ -35,16 +35,24 @@ export class TopNav extends React.Component {
 
           
   return (
-
-        <div className="topBar">
-            <button className="log-out"   ><a className="center"  onClick={this.updateUserInDatabase} href={`${SERVER_ROOT}/auth/logout`}>Log Out</a>
-            </button>
-            <button className="start-over"   ><a className="center"  onClick={this.startOver} >Start Over</a>
-            </button>
-            <p className="user-name">Welcome {userName}</p>
-            <p className="current-score">Your current score is {currentSessionCorrectCount} out of {currentSessionQuestionCount} </p>
-            <p className="current-score">Your lifetime score is {lifetimeCorrectCount} out of {lifetimeQuestionCount} </p>
-        </div>
+        <div> 
+            <div className="topBar">
+                <div className="top-left">
+                    <h3>Welcome, {userName}</h3>
+                </div>
+                <div className="top-center">
+                    <h1 className="lastingLatium">Lasting Latium</h1>
+                </div>
+                <div className="top-right">
+                    <button className="start-over btn daisy"   ><a className="center"  onClick={this.startOver} >Start Over</a></button>
+                    <button className="log-out btn daisy" ><a className="center"  onClick={this.updateUserInDatabase} href={`${SERVER_ROOT}/auth/logout`}>Log Out</a></button>
+                </div>          
+            </div>           
+            <div className="current-score">       
+                <p >Your current score is {currentSessionCorrectCount} out of {currentSessionQuestionCount} </p>
+                <p >Your lifetime score is {lifetimeCorrectCount} out of {lifetimeQuestionCount} </p>
+            </div> 
+        </div>   
   );
 }}
 

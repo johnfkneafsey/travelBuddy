@@ -23,10 +23,10 @@ export class AnswerInput extends React.Component {
      if (userGuess === this.props.questionHistory[0].answer) {
     //    this.setState({feedback: "Correct! The answer is"})
         //alert(`Incorrect! The answer is ${this.props.questionHistory[0].answer}!`);
-        this.props.dispatch(actions.feedback("correct"))
+        this.props.dispatch(actions.feedback("That's correct, the answer is "))
         this.props.dispatch(actions.incrementCorrectCount());
      } else {
-        this.props.dispatch(actions.feedback("incorrect"))
+        this.props.dispatch(actions.feedback("That's incorrect, the answer is "))
    //     this.setState({feedback: "Incorrect! The answer is"})
         //alert(`Incorrect! The correct answer is ${this.props.questionHistory[0].answer}!`);
      }
@@ -36,12 +36,13 @@ export class AnswerInput extends React.Component {
 //ref={ref => this.userGuess = ref}
   render() {
     return (
-      <div className="english">
-        <h3>...in English?</h3>
+      <div className="english center">
+        <h3 className="englishtext">...in English?</h3>
         <form onSubmit={this.submitAnswer}>
           <input type="text" placeholder="Enter an answer" ref="userGuess" />
-          <button>Submit</button>
-          <h3>{this.props.feedback} {this.props.previousAnswer}</h3>
+          <button className="btn daisy">Submit</button>
+          <h3>{this.props.feedback}</h3>
+          <h3>{this.props.previousAnswer}</h3>
         </form>
       </div>
     );
