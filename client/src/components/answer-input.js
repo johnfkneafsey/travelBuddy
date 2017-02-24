@@ -16,15 +16,18 @@ export class AnswerInput extends React.Component {
   submitAnswer(e) {
      e.preventDefault();
      let userGuess = (this.refs.userGuess).value.toLowerCase();
-     this.setState({previousAnswer: this.props.questionHistory[0].answer})
+    // this.setState({previousAnswer: this.props.questionHistory[0].answer})
+     this.props.dispatch(actions.previousAnswer(this.props.questionHistory[0].answer));
      this.props.dispatch(actions.incrementQuestionCount());
      console.log('ANSWER ', this.props.questionHistory[0].answer);
      if (userGuess === this.props.questionHistory[0].answer) {
-        this.setState({feedback: "Correct! The answer is"})
+    //    this.setState({feedback: "Correct! The answer is"})
         //alert(`Incorrect! The answer is ${this.props.questionHistory[0].answer}!`);
+        this.props.dispatch(actions.feedback("correct"))
         this.props.dispatch(actions.incrementCorrectCount());
      } else {
-        this.setState({feedback: "Incorrect! The answer is"})
+        this.props.dispatch(actions.feedback("incorrect"))
+   //     this.setState({feedback: "Incorrect! The answer is"})
         //alert(`Incorrect! The correct answer is ${this.props.questionHistory[0].answer}!`);
      }
      this.props.dispatch(actions.submitUserAnswerToAlgo(this.props.questionHistory, userGuess))
@@ -38,7 +41,7 @@ export class AnswerInput extends React.Component {
         <form onSubmit={this.submitAnswer}>
           <input type="text" placeholder="Enter an answer" ref="userGuess" />
           <button>Submit</button>
-          <h3>{this.state.feedback} {this.state.previousAnswer}</h3>
+          <h3>{this.props.feedback} {this.props.previousAnswer}</h3>
         </form>
       </div>
     );
@@ -52,7 +55,9 @@ const mapStateToProps = (state, props) => ({
     questionHistory: state.questionHistory,
     email: state.email,
     name: state.name,
-    answerHistory: state.answerHistory  
+    answerHistory: state.answerHistory,
+    feedback: state.feedback,
+    previousAnswer: state.previousAnswer
 });
 
 export default connect(mapStateToProps)(AnswerInput);

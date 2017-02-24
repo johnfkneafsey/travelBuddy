@@ -8,10 +8,15 @@ export class TopNav extends React.Component {
 	constructor(props) {
     	super(props)
 	    this.updateUserInDatabase = this.updateUserInDatabase.bind(this);
+        this.startOver = this.startOver.bind(this);
     }
 
     updateUserInDatabase() {
         this.props.dispatch(actions.updateUserInDatabase(this.props)) 
+    }
+
+    startOver() {
+        this.props.dispatch(actions.startOver());
     }
 
 
@@ -33,6 +38,8 @@ export class TopNav extends React.Component {
 
         <div className="topBar">
             <button className="log-out"   ><a className="center"  onClick={this.updateUserInDatabase} href={`${SERVER_ROOT}/auth/logout`}>Log Out</a>
+            </button>
+            <button className="start-over"   ><a className="center"  onClick={this.startOver} >Start Over</a>
             </button>
             <p className="user-name">Welcome {userName}</p>
             <p className="current-score">Your current score is {currentSessionCorrectCount} out of {currentSessionQuestionCount} </p>

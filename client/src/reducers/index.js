@@ -19,7 +19,9 @@ const initialState = {
     answerHistory: {
         questions: 0,
         correctAnswers: 0
-    } 
+    },
+    feedback: "",
+    previousAnswer: "" 
 }
 
 export const mainReducer = (state= initialState, action) => {
@@ -72,15 +74,37 @@ export const mainReducer = (state= initialState, action) => {
         })
     }
 
-    // onSubmit() {
-    //     dispatch INCREMENT_QUESTION_COUNT
-    //     dispatch SUBMIT_USER_ANSWER_TO_ALGO
-    //      if (userInput === this.props.questionHistory[0].answer) {
-    //         dispatch incrementCorrectCount
-    //     }
-    // }
+    if (action.type === actions.START_OVER) {
+    setTimeout(()=> { console.log(store.getState(), "THIS IS THE START_OVER GETSTATE()")}, 3000);      
+    return update(state, {
+            answerHistory: {
+                correctAnswers: {$set: 0},
+                questions: {$set: 0}
+            },
+            sessionHistory: {
+                correctAnswers: {$set: 0},
+                questions: {$set: 0}
+            },
+            previousAnswer: {$set: ""},
+            feedback: {$set: ""}
+        })
+    }
 
 
+    if (action.type === actions.PREVIOUS_ANSWER) {
+    setTimeout(()=> { console.log(store.getState(), "THIS IS THE PREVIOUS_ANSWER GETSTATE()")}, 3000);     
+    return update(state, {  
+            previousAnswer: {$set: action.previousAnswer}
+        })
+    }
+    
+    
+    if (action.type === actions.FEEDBACK) {   
+    setTimeout(()=> { console.log(store.getState(), "THIS IS THE FEEDBACK GETSTATE()")}, 3000);     
+    return update(state, {
+            feedback: {$set: action.feedback}
+        })
+    }
 
 	return state;
 }

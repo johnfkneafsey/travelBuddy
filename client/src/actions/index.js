@@ -25,6 +25,23 @@ export const incrementCorrectCount = () => ({
 	type: INCREMENT_CORRECT_COUNT
 })
 
+export const START_OVER = 'START_OVER';
+export const startOver = () => ({
+	type: START_OVER
+})
+
+export const PREVIOUS_ANSWER = 'PREVIOUS_ANSWER';
+export const previousAnswer = (previousAnswer) => ({
+	type: PREVIOUS_ANSWER,
+	previousAnswer: previousAnswer
+})
+
+export const FEEDBACK = 'FEEDBACK';
+export const feedback = (feedback) => ({
+	type: FEEDBACK,
+	feedback: feedback
+})
+
 export const updateUserInDatabase = (userData) => dispatch => {
 	console.log('JSON STRINGIFY' , JSON.stringify(userData));
 	return fetch('http://localhost:8080/api/logout', {
