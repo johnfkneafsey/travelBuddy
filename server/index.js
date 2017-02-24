@@ -12,10 +12,6 @@ const app = express();
 mongoose.Promise = global.Promise;
 const jsonParser = bodyParser.json();
 
-const database = {
-};
-
-console.log('THIS IS THE DATABASE', database)
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', config.CLIENT_ROOT);
@@ -25,14 +21,13 @@ app.use(function(req, res, next) {
 
 app.use(passport.initialize());
 
-function questionHistory() {
-     Question
-        .find()
-        .exec()
-        .then(res => {
-            return res;
-        })
-}
+
+app.use(function(req, res, next) {
+   res.setHeader('Access-Control-Allow-Origin', '*');
+   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT ,DELETE');
+   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
+   next();
+});
 
 passport.use(
     new GoogleStrategy({
@@ -41,12 +36,6 @@ passport.use(
         callbackURL: `${config.ROOT}/auth/google/callback`
     },
     (accessToken, refreshToken, profile, cb) => {
-
-        // Job 1: Set up Mongo/Mongoose, create a User model which store the
-        // google id, and the access token
-
-        // Job 2: Update this callback to either update or create the user
-        // so it contains the correct access token
 
        let questionHistory = [];
 
@@ -95,9 +84,7 @@ passport.use(
 passport.use(
     new BearerStrategy(
         (accessToken, cb) => {
-        // Job 3: Update this callback to try to find a user with a 
-        // matching access token.  If they exist, let em in, if not,
-        // don't.
+
         User.findOne({accessToken: accessToken}, function(err,user){
             if(err){
                 console.log('ERROR WITH BEARER ');
@@ -116,7 +103,6 @@ passport.use(
         }
     )
 );
-
 
 
 app.get('/auth/google',
@@ -140,9 +126,12 @@ app.get('/auth/logout', (req, res) => {
     res.redirect('/');
 });
 
-app.post('/api/logout', (req, res) => {
-    console.log(req.body)
-});
+app.put('/api/logout', jsonParser, (req, res) => {
+    res.status(200)
+    console.log('IS THIS WORKING???? ', req.body.questionHistory)
+    return User
+        .findOneAndUpdate({"googleId": req.body.googleId}, {$set:{questionHistory: req.body.questionHistory, answerHistory: req.body.answerHistory}}
+    )})
 
 app.get('/api/me',
     passport.authenticate('bearer', {session: false}),
@@ -178,8 +167,6 @@ app.post('/questions', jsonParser, (req, res) => {
             res.status(500).json({error: '500 error'})
         })
 });
-
-
 
 
 let server;

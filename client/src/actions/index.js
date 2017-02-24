@@ -1,23 +1,5 @@
 import store from '../store'
 import fetch from 'isomorphic-fetch';
-// Unused actions
-
-// After answer is submitted
-// -dispatch submitUserAnswerToAlgo(userAnswer, questionHistory) questionHistory will be this.props.questionHistory. It should be an array of objects (question,answer,mValue)
-// this.props.dispatch(action.submitUserAnswerToAlgo(userinput, this.props.questionHistory))
-
-
-// After answer is submitted
-//  -dispatch incrementQuestionCount()
-// If correct answer is submitted
-
-
-
-//    if (userInput === this.props.questionHistory[0].answer) {
-//          dispatch incrementCorrectCount()
-//    }
-
-
 
 
 export const MAP_USER_TO_STORE = 'MAP_USER_TO_STORE';
@@ -43,27 +25,24 @@ export const incrementCorrectCount = () => ({
 	type: INCREMENT_CORRECT_COUNT
 })
 
-
 export const updateUserInDatabase = (userData) => dispatch => {
-	console.log('USER DATA PRE FETCH' ,userData);
+	console.log('JSON STRINGIFY' , JSON.stringify(userData));
 	return fetch('http://localhost:8080/api/logout', {
-		method: 'POST',
+		method: 'PUT',
 		headers: {
+			Accept: 'application/json',
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify({userData})
+		body: JSON.stringify(userData)
 	})
 	.then(res => {
 		if (!res.ok) {
 				throw new Error(res.statusText);
 		}
-		console.log('THIS IS BEING SENT TO LOG OUT ENDPOINT ');
-		return res.json({});
+		console.log('THIS IS BEING SENT TO LOG OUT ENDPOINT ', res);
+		return res.json();
 	})
 	.catch(error => {
 		return error;
 	})
 }
-
-
-
