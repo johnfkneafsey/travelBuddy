@@ -11,7 +11,7 @@ export class AnswerInput extends React.Component {
 
   submitAnswer(e) {
      e.preventDefault();
-     let userGuess = this.userGuess.value;
+     let userGuess = (this.refs.userGuess).value.toLowerCase();
      this.props.dispatch(actions.incrementQuestionCount());
      console.log('ANSWER ', this.props.questionHistory[0].answer);
      if (userGuess === this.props.questionHistory[0].answer) {
@@ -21,14 +21,15 @@ export class AnswerInput extends React.Component {
         alert(`Incorrect! The correct answer is ${this.props.questionHistory[0].answer}!`);
      }
      this.props.dispatch(actions.submitUserAnswerToAlgo(this.props.questionHistory, userGuess))
+     this.refs.userGuess.value = "";
 }
-
+//ref={ref => this.userGuess = ref}
   render() {
     return (
       <div className="english">
         <h3>...in English?</h3>
         <form onSubmit={this.submitAnswer}>
-          <input type="text" placeholder="Enter an answer" ref={ref => this.userGuess = ref} />
+          <input type="text" placeholder="Enter an answer" ref="userGuess" />
           <button>Submit</button>
         </form>
       </div>

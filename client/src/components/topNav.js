@@ -27,17 +27,16 @@ export class TopNav extends React.Component {
         let lifetimeQuestionCount = this.props.answerHistory.questions;
         let lifetimeCorrectCount = this.props.answerHistory.correctAnswers;
 
-         //href={`${SERVER_ROOT}/auth/logout`}
+
           
   return (
 
         <div className="topBar">
-            <button className="log-out"  onClick={this.updateUserInDatabase}><a className="center" >Log Out</a>
+            <button className="log-out"   ><a className="center"  onClick={this.updateUserInDatabase} href={`${SERVER_ROOT}/auth/logout`}>Log Out</a>
             </button>
-            <a className="reset-data" href="#" >Reset Data</a>
             <p className="user-name">Welcome {userName}</p>
-            <p className="current-score">Your current score is {currentSessionCorrectCount} out of {currentSessionQuestionCount} ({currentSessionCorrectCount / currentSessionQuestionCount}%)</p>
-            <p className="current-score">Your lifetime score is {lifetimeCorrectCount} out of {lifetimeQuestionCount} ({lifetimeCorrectCount / lifetimeQuestionCount}%)</p>
+            <p className="current-score">Your current score is {currentSessionCorrectCount} out of {currentSessionQuestionCount} </p>
+            <p className="current-score">Your lifetime score is {lifetimeCorrectCount} out of {lifetimeQuestionCount} </p>
         </div>
   );
 }}
@@ -56,3 +55,13 @@ const mapStateToProps = (state, props) => ({
 });
 
 export default connect(mapStateToProps)(TopNav);
+
+
+
+
+
+// -Styling
+
+// -Edits
+//     -show correct/incorrect 
+

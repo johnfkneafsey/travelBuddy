@@ -123,15 +123,21 @@ app.get('/auth/google/callback',
 app.get('/auth/logout', (req, res) => {
     req.logout();
     res.clearCookie('accessToken');
-    res.redirect('/');
+    res.redirect('http://localhost:3000');
+    
 });
 
 app.put('/api/logout', jsonParser, (req, res) => {
     res.status(200)
-    console.log('IS THIS WORKING???? ', req.body.questionHistory)
-    return User
-        .findOneAndUpdate({"googleId": req.body.googleId}, {$set:{questionHistory: req.body.questionHistory, answerHistory: req.body.answerHistory}}
-    )})
+    console.log('IS THIS WORKING???? ', req.body.answerHistory)
+
+    User
+        .findOneAndUpdate({"googleId": req.body.googleId}, {$set:{"questionHistory": req.body.questionHistory, "answerHistory": req.body.answerHistory}})
+        .exec()
+        .then(updatedStudent => res.status(201).json())
+        .catch(err => res.status(500).json({message: 'Your update was unsuccessful'}));
+});
+
 
 app.get('/api/me',
     passport.authenticate('bearer', {session: false}),
