@@ -62,6 +62,4 @@ export default connect(mapStateToProps)(TopNav);
 
 // -Styling
 
-// -Edits
-//     -show correct/incorrect 
 

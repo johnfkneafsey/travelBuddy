@@ -50,9 +50,9 @@ class App extends React.Component {
 
         return (
             <div>
-                <TopNav />,
+                <TopNav />
                 <div className="parent">
-                <QuestionPage />,
+                <QuestionPage />
                 <AnswerInput />
                 </div>
             </div>
