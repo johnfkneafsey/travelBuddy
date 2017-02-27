@@ -34,21 +34,6 @@ export class QuestionPage extends React.Component {
 
     render() {
 
-            // <article className="flashcard">
-            // <input id="flashcard-1" type="checkbox" />
-            // <label for="flashcard-1">
-            //     <section className="front">
-            //     {question}
-            //     </section>
-                
-            //     <section className="back">
-            //     {answer}
-            //     </section>
-            // </label>
-            // </article>  
-            // </div>
-
-
         let question = this.props.questionHistory[0].question;
         let answer = this.props.questionHistory[0].answer;
 
@@ -57,7 +42,7 @@ export class QuestionPage extends React.Component {
             <div className="center">
             <h3 className="latin">Latin</h3>
             <div className="question-list card center">
-                <div className="question">{question}</div>
+                <div className="question"></div>
             </div>
             </div>
             

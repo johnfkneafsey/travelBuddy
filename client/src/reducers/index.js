@@ -21,7 +21,8 @@ const initialState = {
         correctAnswers: 0
     },
     feedback: "",
-    previousAnswer: "" 
+    previousAnswer: "",
+    toggleLeaderboard: 1
 }
 
 export const mainReducer = (state= initialState, action) => {
@@ -105,6 +106,13 @@ export const mainReducer = (state= initialState, action) => {
             feedback: {$set: action.feedback}
         })
     }
+
+    if (action.type === actions.TOGGLE_LEADERBOARD) {   
+    setTimeout(()=> { console.log(store.getState(), "THIS IS THE TOGGLE_LEADERBOARD GETSTATE()")}, 3000);
+    return update(state, {
+            toggleLeaderboard: {$apply: function(x) {return x + 1}}
+        })
+    }   
 
 	return state;
 }

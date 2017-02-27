@@ -5,9 +5,14 @@ import QuestionPage from './question-page';
 import LoginPage from './login-page';
 import TopNav from './topNav';
 import AnswerInput from './answer-input';
+import Leaderboard from './leaderboard';
 import {SERVER_ROOT} from '../config';
 
-
+// travel words for different languages
+// additional resources
+// progress dashboard
+// pronunciation
+// choose language dashboard
 
 class App extends React.Component {
     constructor(props) {
@@ -48,6 +53,19 @@ class App extends React.Component {
             return <LoginPage />;
         }
 
+        console.log('leaderboard below')
+        setTimeout(console.log(this.props.toggleLeaderboard), 3000);
+
+        if (this.props.toggleLeaderboard % 2 === 0) {
+            console.log('true');
+            return (
+                <div>
+                    <TopNav />
+                    <Leaderboard />
+                </div>
+            )
+        }
+
         return (
             <div>
                 <TopNav />
@@ -59,5 +77,10 @@ class App extends React.Component {
         )
     }
 }
+
+const mapStateToProps = (state, props) => ({
+    toggleLeaderboard: state.toggleLeaderboard
+});
+
 
 export default App;

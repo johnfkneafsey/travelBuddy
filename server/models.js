@@ -1,14 +1,45 @@
 const mongoose = require('mongoose');
 
-
 var userSchema = mongoose.Schema({
     googleId: {type: String, required: true},
     accessToken: {type: String, required: true},
-    questionHistory: [{
-        question: String,
-        answer: String,
-        mValue: Number
-    }],
+    questionHistory: {
+        spanish: [{
+            question: String,
+            answer: String,
+            mValue: Number
+        }],
+        french: [{
+            question: String,
+            answer: String,
+            mValue: Number
+        }],
+        italian: [{
+            question: String,
+            answer: String,
+            mValue: Number
+        }],
+        portuguese: [{
+            question: String,
+            answer: String,
+            mValue: Number
+        }],
+        polish: [{
+            question: String,
+            answer: String,
+            mValue: Number
+        }],
+        swedish: [{
+            question: String,
+            answer: String,
+            mValue: Number
+        }],
+        german: [{
+            question: String,
+            answer: String,
+            mValue: Number
+        }]
+    },
     email: String,
     name: String,
     answerHistory: {
@@ -31,19 +62,54 @@ userSchema.methods.apiRepr = function () {
 }
 
 var questionSchema = mongoose.Schema({
-    question: {type: String, required: true},
-    answer: {type: String, required: true},
-    mValue: {type: Number, default: 1}
-});
+        spanish: [{
+            question: String,
+            answer: String,
+            mValue: Number
+        }],
+        french: [{
+            question: String,
+            answer: String,
+            mValue: Number
+        }],
+        italian: [{
+            question: String,
+            answer: String,
+            mValue: Number
+        }],
+        portuguese: [{
+            question: String,
+            answer: String,
+            mValue: Number
+        }],
+        polish: [{
+            question: String,
+            answer: String,
+            mValue: Number
+        }],
+        swedish: [{
+            question: String,
+            answer: String,
+            mValue: Number
+        }],
+        german: [{
+            question: String,
+            answer: String,
+            mValue: Number
+        }]
+    });
 
 questionSchema.methods.apiRepr = function () {
     return {
-        question: this.question,
-        answer: this.answer,
-        mValue: this.mValue
+        spanish: this.spanish,
+        french: this.french,
+        italian: this.italian,
+        portuguese: this.portuguese,
+        polish: this.polish,
+        swedish: this.swedish,
+        german: this.german
     }
 }
-
 
 
 const Question = mongoose.model('Question', questionSchema)

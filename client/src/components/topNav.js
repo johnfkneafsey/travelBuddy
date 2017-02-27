@@ -9,6 +9,7 @@ export class TopNav extends React.Component {
     	super(props)
 	    this.updateUserInDatabase = this.updateUserInDatabase.bind(this);
         this.startOver = this.startOver.bind(this);
+        this.toggleLeaderboard = this.toggleLeaderboard.bind(this);
     }
 
     updateUserInDatabase() {
@@ -19,10 +20,11 @@ export class TopNav extends React.Component {
         this.props.dispatch(actions.startOver());
     }
 
+    toggleLeaderboard () {
+        this.props.dispatch(actions.toggleLeaderboard());
+    }
 
     render () {
-
-        console.log('THIS.PROPS' ,this.props)
 
         let userName = this.props.name;
 
@@ -31,8 +33,6 @@ export class TopNav extends React.Component {
 
         let lifetimeQuestionCount = this.props.answerHistory.questions;
         let lifetimeCorrectCount = this.props.answerHistory.correctAnswers;
-
-
           
   return (
         <div> 
@@ -44,6 +44,7 @@ export class TopNav extends React.Component {
                     <h1 className="lastingLatium">Lasting Latium</h1>
                 </div>
                 <div className="top-right">
+                    <button className="view-leaderboard btn daisy"   ><a className="center"  onClick={this.toggleLeaderboard} >Leaderboard</a></button>                
                     <button className="start-over btn daisy"   ><a className="center"  onClick={this.startOver} >Start Over</a></button>
                     <button className="log-out btn daisy" ><a className="center"  onClick={this.updateUserInDatabase} href={`${SERVER_ROOT}/auth/logout`}>Log Out</a></button>
                 </div>          
@@ -65,7 +66,8 @@ const mapStateToProps = (state, props) => ({
     email: state.email,
     name: state.name,
     answerHistory: state.answerHistory,
-    sessionHistory: state.sessionHistory
+    sessionHistory: state.sessionHistory,
+    toggleLeaderboard: state.toggleLeaderboard
 
 });
 

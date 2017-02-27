@@ -42,6 +42,11 @@ export const feedback = (feedback) => ({
 	feedback: feedback
 })
 
+export const TOGGLE_LEADERBOARD = 'TOGGLE_LEADERBOARD';
+export const toggleLeaderboard = () => ({
+	type: TOGGLE_LEADERBOARD
+})
+
 export const updateUserInDatabase = (userData) => dispatch => {
 	console.log('JSON STRINGIFY' , JSON.stringify(userData));
 	return fetch('http://localhost:8080/api/logout', {
