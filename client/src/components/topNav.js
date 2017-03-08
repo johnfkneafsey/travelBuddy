@@ -9,7 +9,7 @@ export class TopNav extends React.Component {
     	super(props)
 	    this.updateUserInDatabase = this.updateUserInDatabase.bind(this);
         this.startOver = this.startOver.bind(this);
-        this.toggleLeaderboard = this.toggleLeaderboard.bind(this);
+        this.toggleDashboard = this.toggleDashboard.bind(this);
     }
 
     updateUserInDatabase() {
@@ -20,8 +20,9 @@ export class TopNav extends React.Component {
         this.props.dispatch(actions.startOver());
     }
 
-    toggleLeaderboard () {
-        this.props.dispatch(actions.toggleLeaderboard());
+    toggleDashboard () {
+        this.props.dispatch(actions.selectedLanguage(null));
+        this.props.dispatch(actions.toggleDashboard());
     }
 
     render () {
@@ -34,7 +35,8 @@ export class TopNav extends React.Component {
         let lifetimeQuestionCount = this.props.answerHistory.questions;
         let lifetimeCorrectCount = this.props.answerHistory.correctAnswers;
           
-  return (
+
+      return (
         <div> 
             <div className="topBar">
                 <div className="top-left">
@@ -44,13 +46,13 @@ export class TopNav extends React.Component {
                     <h1 className="lastingLatium">Lasting Latium</h1>
                 </div>
                 <div className="top-right">
-                    <button className="view-leaderboard btn daisy"   ><a className="center"  onClick={this.toggleLeaderboard} >Leaderboard</a></button>                
+                    <button className="view-leaderboard btn daisy"   ><a className="center"  onClick={this.toggleDashboard} >Dashboard</a></button>                
                     <button className="start-over btn daisy"   ><a className="center"  onClick={this.startOver} >Start Over</a></button>
                     <button className="log-out btn daisy" ><a className="center"  onClick={this.updateUserInDatabase} href={`${SERVER_ROOT}/auth/logout`}>Log Out</a></button>
                 </div>          
             </div>           
             <div className="current-score">       
-                <p >Your current score is {currentSessionCorrectCount} out of {currentSessionQuestionCount} </p>
+                <p >Your current session score is {currentSessionCorrectCount} out of {currentSessionQuestionCount} </p>
                 <p >Your lifetime score is {lifetimeCorrectCount} out of {lifetimeQuestionCount} </p>
             </div> 
         </div>   

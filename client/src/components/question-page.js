@@ -10,34 +10,25 @@ export class QuestionPage extends React.Component {
         super(props);
     }
 
-    componentDidMount() {
-        const accessToken = Cookies.get('accessToken');
-        fetch(`${SERVER_ROOT}/api/questions`, {
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`
-                }
-            }).then(res => {
-            if (!res.ok) {
-                throw new Error(res.statusText);
-            }
-            return res.json();
-        }).then(userData =>
-            // console.log('USER DATA WE NEED THIS TO DEEP COPY ', userData.questionHistory[0].question)
-           this.props.dispatch(actions.mapUserToStore(userData))
-        )
-    }
+
 
     render() {
 
-        let question = this.props.questionHistory[0].question;
-        let answer = this.props.questionHistory[0].answer;
+        //  let questionDatabase = this.props.questionHistory;
+        //  let language = this.props.selectedLanguage;
+
+        //  let question = questionDatabase.language   //[0].question;
+        // //  let answer = questionDatabase.language[0].answer;
 
         return (
             
             <div className="center">
             <h3 className="latin">Latin</h3>
             <div className="question-list card center">
-                <div className="question"></div>
+                <div className="question">
+                   
+
+                </div>
             </div>
             </div>
             
@@ -52,7 +43,8 @@ const mapStateToProps = (state, props) => ({
     questionHistory: state.questionHistory,
     email: state.email,
     name: state.name,
-    answerHistory: state.answerHistory
+    answerHistory: state.answerHistory,
+    selectedLanguage: state.selectedLanguage
 });
 
 export default connect(mapStateToProps)(QuestionPage);

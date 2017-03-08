@@ -42,9 +42,16 @@ export const feedback = (feedback) => ({
 	feedback: feedback
 })
 
-export const TOGGLE_LEADERBOARD = 'TOGGLE_LEADERBOARD';
-export const toggleLeaderboard = () => ({
-	type: TOGGLE_LEADERBOARD
+export const TOGGLE_DASHBOARD = 'TOGGLE_DASHBOARD';
+export const toggleDashboard = () => ({
+	type: TOGGLE_DASHBOARD
+})
+
+
+export const SELECTED_LANGUAGE = 'SELECTED_LANGUAGE';
+export const selectedLanguage = (language) => ({
+	type: SELECTED_LANGUAGE,
+	language: language
 })
 
 export const updateUserInDatabase = (userData) => dispatch => {

@@ -37,14 +37,15 @@ passport.use(
     },
     (accessToken, refreshToken, profile, cb) => {
 
-       let questionHistory = [];
+       let questionHistory;
 
         Question
             .find()
             .exec()
             .then(res => {
-                console.log('WHAT IS THE RESPONSE???? ',res);
-                questionHistory = res;
+                console.log('new user res', res)
+                console.log('WHAT IS THE RESPONSE???? ',res[0]);
+                questionHistory = res[0];
             })
 
         User
@@ -52,6 +53,7 @@ passport.use(
             .exec()
             .then(user => {
                 if (!user) {
+                    console.log('BUILDING NEW USER')
                     var newUser = {
                         googleId: profile.id,
                         accessToken: accessToken,

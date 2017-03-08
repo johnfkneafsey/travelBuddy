@@ -5,7 +5,9 @@ import QuestionPage from './question-page';
 import LoginPage from './login-page';
 import TopNav from './topNav';
 import AnswerInput from './answer-input';
-import Leaderboard from './leaderboard';
+import Dashboard from './dashboard';
+import { connect } from 'react-redux';
+import store from '../store';
 import {SERVER_ROOT} from '../config';
 
 // travel words for different languages
@@ -14,7 +16,7 @@ import {SERVER_ROOT} from '../config';
 // pronunciation
 // choose language dashboard
 
-class App extends React.Component {
+export class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -53,20 +55,22 @@ class App extends React.Component {
             return <LoginPage />;
         }
 
-        console.log('leaderboard below')
-        setTimeout(console.log(this.props.toggleLeaderboard), 3000);
+        console.log('PROPS TOGGLE DASH ', this.props.toggleDashboard)        
 
-        if (this.props.toggleLeaderboard % 2 === 0) {
-            console.log('true');
+        if (this.props.toggleDashboard % 2 === 0) {
+            console.log(this.props.toggleDashboard)
+            console.log('render userSelection')
             return (
                 <div>
-                    <TopNav />
-                    <Leaderboard />
+                    <Dashboard />
                 </div>
             )
-        }
 
+        } else {
+
+        console.log('render questions')
         return (
+
             <div>
                 <TopNav />
                 <div className="parent">
@@ -75,12 +79,15 @@ class App extends React.Component {
                 </div>
             </div>
         )
-    }
+    }}
 }
 
+
+
 const mapStateToProps = (state, props) => ({
-    toggleLeaderboard: state.toggleLeaderboard
+    toggleDashboard: state.toggleDashboard,
+    selectedLanguage: state.selectedLanguage
 });
 
 
-export default App;
+export default connect(mapStateToProps)(App)

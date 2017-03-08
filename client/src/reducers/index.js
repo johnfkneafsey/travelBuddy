@@ -20,9 +20,10 @@ const initialState = {
         questions: 0,
         correctAnswers: 0
     },
-    feedback: "",
-    previousAnswer: "",
-    toggleLeaderboard: 1
+    feedback: '',
+    previousAnswer: '',
+    toggleDashboard: 2,
+    selectedLanguage: "spanish"
 }
 
 export const mainReducer = (state= initialState, action) => {
@@ -77,7 +78,7 @@ export const mainReducer = (state= initialState, action) => {
 
     if (action.type === actions.START_OVER) {
     setTimeout(()=> { console.log(store.getState(), "THIS IS THE START_OVER GETSTATE()")}, 3000);      
-    return update(state, {
+        return update(state, {
             answerHistory: {
                 correctAnswers: {$set: 0},
                 questions: {$set: 0}
@@ -93,26 +94,32 @@ export const mainReducer = (state= initialState, action) => {
 
 
     if (action.type === actions.PREVIOUS_ANSWER) {
-    setTimeout(()=> { console.log(store.getState(), "THIS IS THE PREVIOUS_ANSWER GETSTATE()")}, 3000);     
-    return update(state, {  
+        setTimeout(()=> { console.log(store.getState(), "THIS IS THE PREVIOUS_ANSWER GETSTATE()")}, 3000);     
+        return update(state, {  
             previousAnswer: {$set: action.previousAnswer}
         })
     }
     
-    
     if (action.type === actions.FEEDBACK) {   
-    setTimeout(()=> { console.log(store.getState(), "THIS IS THE FEEDBACK GETSTATE()")}, 3000);     
-    return update(state, {
+        setTimeout(()=> { console.log(store.getState(), "THIS IS THE FEEDBACK GETSTATE()")}, 3000);     
+        return update(state, {
             feedback: {$set: action.feedback}
         })
     }
 
-    if (action.type === actions.TOGGLE_LEADERBOARD) {   
-    setTimeout(()=> { console.log(store.getState(), "THIS IS THE TOGGLE_LEADERBOARD GETSTATE()")}, 3000);
-    return update(state, {
-            toggleLeaderboard: {$apply: function(x) {return x + 1}}
+    if (action.type === actions.TOGGLE_DASHBOARD) {   
+        setTimeout(()=> { console.log(store.getState(), "THIS IS THE TOGGLE_DASHBOARD GETSTATE()")}, 3000);
+        return update(state, {
+            toggleDashboard: {$apply: function(x) {return x + 1}}
         })
     }   
+
+    if (action.type === actions.SELECTED_LANGUAGE) {   
+        setTimeout(()=> { console.log(store.getState(), "THIS IS THE SELECTED_LANGUAGE GETSTATE()")}, 3000);
+        return update(state, {
+            selectedLanguage: {$set: action.language}
+        })
+    }  
 
 	return state;
 }
