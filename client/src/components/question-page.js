@@ -1,7 +1,6 @@
 import React from 'react';
 import * as Cookies from 'js-cookie';
 import {SERVER_ROOT} from '../config';
-
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 import Store from '../store';
@@ -13,7 +12,6 @@ export class QuestionPage extends React.Component {
 
     componentDidMount() {
         const accessToken = Cookies.get('accessToken');
-
         fetch(`${SERVER_ROOT}/api/questions`, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`
@@ -24,13 +22,10 @@ export class QuestionPage extends React.Component {
             }
             return res.json();
         }).then(userData =>
-       // console.log('USER DATA WE NEED THIS TO DEEP COPY ', userData.questionHistory[0].question)
+            // console.log('USER DATA WE NEED THIS TO DEEP COPY ', userData.questionHistory[0].question)
            this.props.dispatch(actions.mapUserToStore(userData))
-            )
-        }
-
-
-
+        )
+    }
 
     render() {
 
