@@ -12,7 +12,7 @@ export const insertionSort = (arr) => {
 }
 
 export const spacedAlgo = (array, userAnswer) => {
-  console.log('INSIDE ALGO')
+  console.log('INSIDE ALGO' , array[0].answer)
   if (userAnswer === array[0].answer) {
     ++array[0].mValue;
   }  

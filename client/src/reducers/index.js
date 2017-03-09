@@ -1,7 +1,7 @@
 import update from 'immutability-helper';
 import * as actions from '../actions/index';
 import store from '../store';
-import { spacedAlgo } from '../algorithm.js';
+//import { spacedAlgo } from '../algorithm.js';
 import { insertionSort } from '../algorithm.js';
 
 
@@ -9,7 +9,7 @@ const initialState = {
     _id: '',
     googleId: '',
     accessToken: '',
-    questionHistory: 'hello',
+    questionHistory: null,
     email: '',
     name: '',
     sessionHistory: {
@@ -24,7 +24,16 @@ const initialState = {
     previousAnswer: '',
     toggleDashboard: 2,
     selectedLanguage: "spanish",
-    languageFlipper: 1
+    languageFlipper: 1,
+    progress: {
+        german: 0,
+        portuguese: 0,
+        polish: 0,
+        spanish: 0,
+        swedish: 0,
+        italian: 0,
+        french: 0
+    }
 }
 
 export const mainReducer = (state= initialState, action) => {
@@ -34,7 +43,7 @@ export const mainReducer = (state= initialState, action) => {
      //   console.log('QUESTION HISTORY IN REDUCER  QUESTION ', action.userData.questionHistory[0].question);
         return update(state, {
             _id: {$set: action.userData._id},
-            googleId: {$set: action.userData.googleId},
+            googleId: {$set: action.userData.googleId},                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
             accessToken: {$set: action.userData.accessToken},
             questionHistory: {$set: action.userData.questionHistory},
             email: {$set: action.userData.email},
@@ -45,20 +54,57 @@ export const mainReducer = (state= initialState, action) => {
 
     if (action.type === actions.SUBMIT_USER_ANSWER_TO_ALGO) {
         setTimeout(()=> { console.log(store.getState(), "THIS IS THE SUBMIT_USER_ANSWER_TO_ALGO GETSTATE()")}, 3000);
-        console.log('THIS IS THE ACTION.QUESTHISTORY ', action.questionHistory)
-        console.log('THIS IS THE ACTION.USER ANSWER ', action.userAnswer)
-        let language = action.language
-        let sortedquestionHistory = spacedAlgo(action.questionHistory, action.userAnswer)
-        console.log('THIS SHOULD BE A SORTED ARRAY ', sortedquestionHistory)
+
+        let _language = action.language
+        let _array = action.questionHistory;
+        let  _userAnswer = action.userAnswer;
+        let _flipper = action.flipper;
+        console.log('_language', _language);
+        console.log('_array',_array);
+        console.log('_userAnswer', _userAnswer);
+        console.log('_flipper',_flipper);
+        
+        
+        let sortedQuestionHistory;
+            console.log('INSIDE ALGO' , _array[0].answer)
+
+            if (_flipper % 2 === 0) {
+                console.log('answer was ANSWER', _array[0].answer)
+                if (_userAnswer === _array[0].answer) {
+                    ++_array[0].mValue;
+                }  
+                else {
+                    _array[0].mValue = 1;
+                }
+                insertionSort(_array);
+                sortedQuestionHistory =  _array;
+            } else {
+                if (_userAnswer === _array[0].question) {
+                console.log('answer was QUESTION', _array[0].question)
+                    ++_array[0].mValue;
+                }  
+                else {
+                    _array[0].mValue = 1;
+                }
+                insertionSort(_array);
+                sortedQuestionHistory =  _array;     
+            }           
+        
+    
+
+        // let sortedquestionHistory = spacedAlgo(action.questionHistory, action.userAnswer, action.flipper)
+        // console.log('THIS SHOULD BE A SORTED ARRAY ', sortedquestionHistory)
         // returns a sorted questionHistory array with updated mValue
         return update(state, {
-            questionHistory: {language: {$set: sortedquestionHistory}}
+            questionHistory: {[_language]: {$set: sortedQuestionHistory}}
         })
     }
 
     
     if (action.type === actions.INCREMENT_QUESTION_COUNT) {
         setTimeout(()=> { console.log(store.getState(), "THIS IS THE INCREMENT_QUESTION_COUNT GETSTATE()")}, 3000);
+
+
         return update(state, {
             answerHistory: {
                 questions: {$apply: function(x) {return x + 1}}},
@@ -128,6 +174,21 @@ export const mainReducer = (state= initialState, action) => {
             languageFlipper: {$apply: function(x) {return x + 1}}
         })
     }  
+
+    if (action.type === actions.UPDATE_PROGRESS) {   
+        setTimeout(()=> { console.log(store.getState(), "THIS IS THE UPDATE_PROGRESS GETSTATE()")}, 3000);
+        let updateLanguage = action.language;
+        let updateAmount = action.mValueTally - 20;
+        return update(state, {
+            progress: {[updateLanguage]: {$set: updateAmount}}
+        })
+    }
+
+
+
+
+
+
 
 	return state;
 }

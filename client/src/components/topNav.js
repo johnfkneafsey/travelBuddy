@@ -23,6 +23,7 @@ export class TopNav extends React.Component {
     toggleDashboard () {
         this.props.dispatch(actions.selectedLanguage(null));
         this.props.dispatch(actions.toggleDashboard());
+        this.props.dispatch(actions.updateUserInDatabase(this.props))
     }
 
     render () {
@@ -43,11 +44,10 @@ export class TopNav extends React.Component {
                     <h3>Hey {userName.slice(0, userName.indexOf(" "))}!</h3>
                 </div>
                 <div className="top-center">
-                    <h1 className="lastingLatium">Travel Buddy</h1>
+                    <h1 className="lastingLatium">World Traveler</h1>
                 </div>
                 <div className="top-right">
                     <button className="view-leaderboard btn daisy"   ><a className="center"  onClick={this.toggleDashboard} >Dashboard</a></button>                
-                    <button className="start-over btn daisy"   ><a className="center"  onClick={this.startOver} >Start Over</a></button>
                     <button className="log-out btn daisy" ><a className="center"  onClick={this.updateUserInDatabase} href={`${SERVER_ROOT}/auth/logout`}>Log Out</a></button>
                 </div>          
             </div>           

@@ -34,7 +34,7 @@ export class AnswerInput extends React.Component {
     } else {
       this.props.dispatch(actions.feedback("That's incorrect, the answer was "))
     }
-    this.props.dispatch(actions.submitUserAnswerToAlgo(this.props.questionHistory[language], userGuess, language))
+    this.props.dispatch(actions.submitUserAnswerToAlgo(this.props.questionHistory[language], userGuess, language, this.props.languageFlipper))
     this.refs.userGuess.value = "";
 }
 
@@ -42,7 +42,7 @@ export class AnswerInput extends React.Component {
 
     let bottomLanguage;
     if (this.props.languageFlipper % 2 === 0) { 
-      bottomLanguage = this.props.selectedLanguage.toUpperCase();;
+      bottomLanguage = this.props.selectedLanguage.toUpperCase();
     } else {
       bottomLanguage = "English"
     }

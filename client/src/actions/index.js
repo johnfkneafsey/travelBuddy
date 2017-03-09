@@ -9,11 +9,12 @@ export const mapUserToStore = (userData) => ({
 })
 
 export const SUBMIT_USER_ANSWER_TO_ALGO = 'SUBMIT_USER_ANSWER_TO_ALGO';
-export const submitUserAnswerToAlgo = (questionHistory, userAnswer, language) => ({
+export const submitUserAnswerToAlgo = (questionHistory, userAnswer, language, flipper) => ({
 	type: SUBMIT_USER_ANSWER_TO_ALGO,
     questionHistory: questionHistory,
     userAnswer: userAnswer,
-	language: language
+	language: language,
+	flipper: flipper
 })
 
 export const INCREMENT_QUESTION_COUNT = 'INCREMENT_QUESTION_COUNT';
@@ -59,6 +60,15 @@ export const selectedLanguage = (language) => ({
 export const FLIP_LANGUAGE = 'FLIP_LANGUAGE';
 export const flipLanguage = (language) => ({
 	type: FLIP_LANGUAGE,
+})
+
+
+export const UPDATE_PROGRESS = 'UPDATE_PROGRESS';
+export const updateProgress = (language, mValueTally, flipper) => ({
+	type: UPDATE_PROGRESS,
+	language: language,
+	mValueTally: mValueTally,
+	flipper: flipper
 })
 
 

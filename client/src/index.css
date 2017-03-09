@@ -177,7 +177,7 @@ input[type="password"]:focus {
 
 .lastingLatium {
   font-size: 50px;
-  font-style: italic;
+
 }
 
 .spaced {
@@ -190,7 +190,7 @@ input[type="password"]:focus {
 }
 
 .biggest {
-  font-style: italic;
+
   font-size: 70px;
 }
 

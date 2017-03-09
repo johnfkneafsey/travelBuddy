@@ -9,14 +9,12 @@ export class QuestionPage extends React.Component {
     constructor(props) {
         super(props);
         this.onFlipLanguage = this.onFlipLanguage.bind(this);
-        this.onRandomize = this.onRandomize.bind(this);
+
     }
 
     onFlipLanguage() {
         this.props.dispatch(actions.flipLanguage());
     }
-
-
 
 
     render() {
@@ -28,10 +26,14 @@ export class QuestionPage extends React.Component {
           let topLanguage;
           let currentQuestion;
           if (this.props.languageFlipper % 2 === 0) { 
+              console.log(questionDatabase[language][0])
             currentQuestion = questionDatabase[language][0]['question'];
+            console.log('TOP CURRENT QUESTION', currentQuestion);
             topLanguage = "English";
+
           } else {
             currentQuestion = questionDatabase[language][0]['answer'];
+            console.log('BOTTOM CURRENT QUESTION', currentQuestion);
             topLanguage = language.toUpperCase();
           }
 
