@@ -9,10 +9,11 @@ export const mapUserToStore = (userData) => ({
 })
 
 export const SUBMIT_USER_ANSWER_TO_ALGO = 'SUBMIT_USER_ANSWER_TO_ALGO';
-export const submitUserAnswerToAlgo = (questionHistory, userAnswer) => ({
+export const submitUserAnswerToAlgo = (questionHistory, userAnswer, language) => ({
 	type: SUBMIT_USER_ANSWER_TO_ALGO,
     questionHistory: questionHistory,
-    userAnswer: userAnswer
+    userAnswer: userAnswer,
+	language: language
 })
 
 export const INCREMENT_QUESTION_COUNT = 'INCREMENT_QUESTION_COUNT';
@@ -37,9 +38,9 @@ export const previousAnswer = (previousAnswer) => ({
 })
 
 export const FEEDBACK = 'FEEDBACK';
-export const feedback = (feedback) => ({
+export const feedback = (feedbackValue) => ({
 	type: FEEDBACK,
-	feedback: feedback
+	feedbackValue: feedbackValue
 })
 
 export const TOGGLE_DASHBOARD = 'TOGGLE_DASHBOARD';
@@ -53,6 +54,15 @@ export const selectedLanguage = (language) => ({
 	type: SELECTED_LANGUAGE,
 	language: language
 })
+
+
+export const FLIP_LANGUAGE = 'FLIP_LANGUAGE';
+export const flipLanguage = (language) => ({
+	type: FLIP_LANGUAGE,
+})
+
+
+
 
 export const updateUserInDatabase = (userData) => dispatch => {
 	console.log('JSON STRINGIFY' , JSON.stringify(userData));

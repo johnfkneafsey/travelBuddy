@@ -23,7 +23,8 @@ const initialState = {
     feedback: '',
     previousAnswer: '',
     toggleDashboard: 2,
-    selectedLanguage: "spanish"
+    selectedLanguage: "spanish",
+    languageFlipper: 1
 }
 
 export const mainReducer = (state= initialState, action) => {
@@ -46,12 +47,12 @@ export const mainReducer = (state= initialState, action) => {
         setTimeout(()=> { console.log(store.getState(), "THIS IS THE SUBMIT_USER_ANSWER_TO_ALGO GETSTATE()")}, 3000);
         console.log('THIS IS THE ACTION.QUESTHISTORY ', action.questionHistory)
         console.log('THIS IS THE ACTION.USER ANSWER ', action.userAnswer)
-        
+        let language = action.language
         let sortedquestionHistory = spacedAlgo(action.questionHistory, action.userAnswer)
         console.log('THIS SHOULD BE A SORTED ARRAY ', sortedquestionHistory)
         // returns a sorted questionHistory array with updated mValue
         return update(state, {
-            questionHistory: {$set: sortedquestionHistory}
+            questionHistory: {language: {$set: sortedquestionHistory}}
         })
     }
 
@@ -103,7 +104,7 @@ export const mainReducer = (state= initialState, action) => {
     if (action.type === actions.FEEDBACK) {   
         setTimeout(()=> { console.log(store.getState(), "THIS IS THE FEEDBACK GETSTATE()")}, 3000);     
         return update(state, {
-            feedback: {$set: action.feedback}
+            feedback: {$set: action.feedbackValue}
         })
     }
 
@@ -118,6 +119,13 @@ export const mainReducer = (state= initialState, action) => {
         setTimeout(()=> { console.log(store.getState(), "THIS IS THE SELECTED_LANGUAGE GETSTATE()")}, 3000);
         return update(state, {
             selectedLanguage: {$set: action.language}
+        })
+    }  
+
+    if (action.type === actions.FLIP_LANGUAGE) {   
+        setTimeout(()=> { console.log(store.getState(), "THIS IS THE FLIP_LANGUAGE GETSTATE()")}, 3000);
+        return update(state, {
+            languageFlipper: {$apply: function(x) {return x + 1}}
         })
     }  
 

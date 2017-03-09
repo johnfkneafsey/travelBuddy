@@ -45,7 +45,7 @@ export class Dashboard extends React.Component {
         <div>
             <div className="topBar">
                 <div className="top-left">
-                    <h3>Welcome, {userName}</h3>
+                    <h3>Hey {userName.slice(0, userName.indexOf(" "))}!</h3>
                 </div>
                 <div className="top-center">
                     <h1 className="lastingLatium">Travel Buddy</h1>
@@ -90,7 +90,8 @@ export class Dashboard extends React.Component {
         feedback: state.feedback,
         previousAnswer: state.previousAnswer,
         toggleLeaderboard: state.toggleLeaderboard,
-        selectedLanguage: state.selectedLanguage
+        selectedLanguage: state.selectedLanguage,
+        languageFlipper: state.languageFlipper
     });
 
     export default connect(mapStateToProps)(Dashboard);
