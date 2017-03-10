@@ -39,6 +39,7 @@ export class AnswerInput extends React.Component {
 }
 
   render() {
+    let language = this.props.selectedLanguage;
 
     let bottomLanguage;
     if (this.props.languageFlipper % 2 === 0) { 
@@ -69,32 +70,49 @@ export class AnswerInput extends React.Component {
           return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
     };
 
+    let progressBarStyle = {
+      "width": percentageValue[language] + "%",
+      "minWidth": "10px"
+    }
+    console.log('PERCENTAE VAL LANG' ,percentageValue[language])
+
     return (
 
       <div>
         <div className="col-lg-6">
           <h4>...in {bottomLanguage.toProperCase()}?</h4>
+        </div>
+
+        <div className="col-lg-6">
+          <p>{this.props.feedback}</p>
+          <p>{this.props.previousAnswer}</p>
+        </div>
+        <div className="col-lg-6">
           <div className="form-style-4">
             <form onSubmit={this.submitAnswer}>
               <input type="text" placeholder="Enter an answer" ref="userGuess" className="textInput" />
               <br></br>
-              <button className="btn flipButton"  >Submit</button>
+              <button className="btn flipButton">Submit</button>
             </form>
-        </div>
-        </div>
-        <div className="col-lg-6">
-          <h2></h2>
-          <p>{this.props.feedback}</p>
-          <p>{'"' + this.props.previousAnswer + '"'}</p>
-        </div>
-        <div className="col-lg-6">
-          <div className="progress questionPageBar" >
-              <div className="bar" style={{width: `${percentageValue.language}%`}}> {percentageValue.language}%</div>
           </div>
+        </div>
+        <div className="col-lg-6">
+          <h4>Mastery</h4>
+          <div className="progress transparentProgress">
+            <div className="progress-bar yellowBar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style={progressBarStyle} >
+            {percentageValue[language]}%
+            </div>
+          </div>
+
+
         </div>
       </div>  
       
-  
+          /*<div className="progress">
+            <div className="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style={{width: `${percentageValue.language}%`}} >
+              {percentageValue.language}%
+            </div>
+          </div>*/
 
     );
   }

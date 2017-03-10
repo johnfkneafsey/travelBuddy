@@ -93,8 +93,9 @@ export class Dashboard extends React.Component {
             </div>
           </div>
 
-          <div className="inner cover centerDashboard">
-            <h1 className="cover-heading">Welcome to World Traveler </h1>
+          <div className="inner cover">
+            <img className="img-responsive globeImageDash" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Globe_icon-white.svg/2000px-Globe_icon-white.svg.png" alt="" />
+            <h1 className="cover-heading">World Traveler </h1>
             <p className="lead">Pick a new language or continue learning a previous one.</p>             
                 <select placeholder="Language=" name="colour1" id='language' className="colour1 form-group" value={this.value} ref="language" onChange={this.onSubmit}>
                     <option key={0} value="" disabled selected className="center-input-text">Select ↕</option>
@@ -106,10 +107,69 @@ export class Dashboard extends React.Component {
                     <option key={6} value="french" className="center-input-text">French</option>
                     <option key={7} value="spanish" className="center-input-text">Spanish</option>                                                
                 </select>
+          <br></br>
+          <br></br>
+          <br></br>
+          <h3>Learning Mastery</h3>
+
+          <br></br>
+
+          <h5>German</h5>
+          <div className="progress transparentProgress dashboardProgress">
+            <div className="progress-bar yellowBar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style={{minWidth: "10px", width: percentageValue.german}} >
+            {percentageValue.german}%
             </div>
+          </div>
+
+          <h5>Swedish</h5>
+          <div className="progress transparentProgress dashboardProgress">
+            <div className="progress-bar yellowBar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style={{minWidth: "10px", width: percentageValue.swedish}} >
+            {percentageValue.swedish}%
+            </div>
+          </div>
+
+          <h5>Polish</h5>
+          <div className="progress transparentProgress dashboardProgress">
+            <div className="progress-bar yellowBar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style={{minWidth: "10px", width: percentageValue.polish}} >
+            {percentageValue.polish}%
+            </div>
+          </div>
+
+          <h5>Portuguese</h5>
+          <div className="progress transparentProgress dashboardProgress">
+            <div className="progress-bar yellowBar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style={{minWidth: "10px", width: percentageValue.portuguese}} >
+            {percentageValue.portuguese}%
+            </div>
+          </div>
+
+          <h5>Italian</h5>
+          <div className="progress transparentProgress dashboardProgress">
+            <div className="progress-bar yellowBar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style={{minWidth: "10px", width: percentageValue.italian}} >
+            {percentageValue.italian}%
+            </div>
+          </div>
+
+          <h5>French</h5>
+          <div className="progress transparentProgress dashboardProgress">
+            <div className="progress-bar yellowBar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style={{minWidth: "10px", width: percentageValue.french}} >
+            {percentageValue.french}%
+            </div>
+          </div>
+
+          <h5>Spanish</h5>
+          <div className="progress transparentProgress dashboardProgress">
+            <div className="progress-bar yellowBar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style={{minWidth: "10px", width: percentageValue.spanish}} >
+            {percentageValue.spanish}%
+            </div>
+          </div>
+            
+
+
+
         </div>
+      </div>
     </div>
-</div>
+  </div>
 
 
     );
@@ -132,80 +192,3 @@ export class Dashboard extends React.Component {
     });
 
     export default connect(mapStateToProps)(Dashboard);
-
-          <div className="mastfoot">
-            <div className="inner yellow">
-              <p>JFK</p>
-            </div>
-          </div>
-
-
-{/*
-<div>
-            <div className="topBar">
-                <div className="top-left">
-                    <h3>Hey {userName.slice(0, userName.indexOf(" "))}!</h3>
-                </div>
-                <div className="top-center">
-                    <h1 className="lastingLatium">World Traveler</h1>
-                </div>
-                <div className="top-right">
-                    <button className="log-out btn daisy" ><a className="center"  onClick={this.updateUserInDatabase} href={`${SERVER_ROOT}/auth/logout`}>Log Out</a></button>
-                </div>          
-            </div>           
-            <div>
-                <form onSubmit={this.onSubmit}>
-                    <label>Select a Language</label>
-						<select name="language" id='language' className="form-control pickLanguage" value={this.value} ref="language" required>
-	      					<option key={1} value="german" className="center-input-text">German</option>
-                            <option key={2} value="swedish" className="center-input-text">Swedish</option>
-	      					<option key={3} value="polish" className="center-input-text">Polish</option>
-                            <option key={4} value="portuguese" className="center-input-text">Portuguese</option>
-	      					<option key={5} value="italian" className="center-input-text">Italian</option>
-                            <option key={6} value="french" className="center-input-text">French</option>
-	      					<option key={7} value="spanish" className="center-input-text">Spanish</option>                                                
-                        </select>
-                        <input type="submit" className="btn btn-primary pickLanguageBtn"/>
-                </form>
-            </div>
-
-            <div className="w3-container">
-                <h2 >Your Progress</h2>
-                    <h4><u>Language</u></h4>
-                    <h4 className="center"><u className="center">Progress</u></h4>
-
-                        <p ><b>German</b></p>
-                        <div className="w3-light-grey w3-round">
-                            <div className="w3-container w3-blue w3-round" style={{width: `${percentageValue.german}%`}}>{Math.round(percentageValue.german)}%</div>
-                        </div>
-                
-                        <p ><b>Portuguese</b></p>
-                        <div className="w3-light-grey w3-round">
-                            <div className="w3-container w3-blue w3-round" style={{width: `${percentageValue.portuguese}%`}}>{Math.round(percentageValue.portuguese)}%</div>
-                        </div>
-                        <p ><b>Polish</b></p>
-                        <div className="w3-light-grey w3-round">
-                            <div className="w3-container w3-blue w3-round" style={{width: `${percentageValue.polish}%`}}>{Math.round(percentageValue.polish)}%</div>
-                        </div>
-
-                        <p ><b>Spanish</b></p>
-                        <div className="w3-light-grey w3-round">
-                            <div className="w3-container w3-blue w3-round" style={{width: `${percentageValue.spanish}%`}}>{Math.round(percentageValue.spanish)}%</div>
-                        </div>
-
-                        <p ><b>Swedish</b></p>
-                        <div className="w3-light-grey w3-round">
-                            <div className="w3-container w3-blue w3-round" style={{width: `${percentageValue.swedish}%`}}>{Math.round(percentageValue.swedish)}%</div>
-                        </div>
-
-                        <p ><b>Italian</b></p>
-                        <div className="w3-light-grey w3-round">
-                            <div className="w3-container w3-blue w3-round" style={{width: `${percentageValue.italian}%`}}>{Math.round(percentageValue.italian)}%</div>
-                        </div>
-
-                        <p ><b>French</b></p>
-                        <div className="w3-light-grey w3-round">
-                            <div className="w3-container w3-blue w3-round" style={{width: `${percentageValue.french}%`}}>{Math.round(percentageValue.french)}%</div>
-                        </div>
-            </div>
-        </div>*/}

@@ -78,7 +78,9 @@ export class QuestionPage extends React.Component {
           </ul>
 
           <ul className="nav nav-pills pull-left">
-            <li className="rightIcons" role="presentation" ><h3 className="leftIcons">World Traveler</h3></li>
+            <li className="rightIcons" role="presentation" ><h3 className="leftIcons">World Traveler </h3></li>
+            <img className="img-responsive globeImageQPage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Globe_icon-white.svg/2000px-Globe_icon-white.svg.png" alt="" />
+           
           </ul>
         </nav>
 

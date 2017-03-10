@@ -39,7 +39,7 @@ a:hover {
 html,
 body {
   height: 100%;
-  background-color: #fff;
+  background-color: #333;
   }
 body {
   color: #fff;
@@ -63,6 +63,7 @@ body {
 .site-wrapper-inner {
   display: table-cell;
   vertical-align: top;
+  text-align: center;
 
 }
 .cover-container {
@@ -75,6 +76,7 @@ body {
 /* Padding for spacing */
 .inner {
   padding: 30px;
+  
 
 }
 
@@ -297,6 +299,7 @@ body {
 .leftIcons {
   font-size: 40px;
   margin-top: 40px;
+  margin-right: 10px;
 }
 
 .topLanguage {
@@ -322,9 +325,10 @@ body {
 
 .form-style-4 {
     font-family: 'Open Sans Condensed', arial, sans;
-    width: 500px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     background: #333;
-    margin: 30px auto;
+    
 }
 
 .textInput {
@@ -335,5 +339,67 @@ body {
     outline: none;
     padding: 0px 0px 0px 0px;
     font-style: italic;
-    margin-right: 10px;
+}
+
+.yellowBar {
+    background-image: none;
+    background-color: #F7CE3E;
+}
+
+.transparentProgress {
+    background-image: none;
+    background-color: #333;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, .5);
+}
+
+.dashboardProgress {
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px
+}
+
+.globeImageDash {
+  height: 150px;
+  width: 150px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.globeImageQPage {
+  height: 50px;
+  width: 50px;
+  margin-top: 15px;
+}
+
+.signUpBody {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.logInHeader {
+  height: 20px;
+  width: 100%;
+  background-image: none;
+  background-color: #F7CE3E;
+}
+
+.logInFooter {
+  height: 20px;
+  width: 100%;
+  background-image: none;
+  background-color: #F7CE3E;
+}
+
+.signInPageWrapper {
+  height: 1000px;
+  background-image: url("http://tropicalvacationspotsblog.com/wp-content/uploads/2013/05/CLPMBP10_Barachois03_web.jpg");
+  background-color: #cccccc;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: 2600px 1400px;
+}
+
+.description {
+  margin-top: 50px;
 }
