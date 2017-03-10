@@ -20,38 +20,58 @@ export class QuestionPage extends React.Component {
     render() {
           let questionDatabase = this.props.questionHistory;
           let language = this.props.selectedLanguage;
-
-          console.log('this is a log of questiondatabase ' ,questionDatabase)
-          console.log('this is a log of language ' ,language)
           let topLanguage;
           let currentQuestion;
           if (this.props.languageFlipper % 2 === 0) { 
-              console.log(questionDatabase[language][0])
             currentQuestion = questionDatabase[language][0]['question'];
-            console.log('TOP CURRENT QUESTION', currentQuestion);
             topLanguage = "English";
 
           } else {
             currentQuestion = questionDatabase[language][0]['answer'];
-            console.log('BOTTOM CURRENT QUESTION', currentQuestion);
+
             topLanguage = language.toUpperCase();
           }
 
-          console.log('this is a log of question', currentQuestion)
+          String.prototype.toProperCase = function () {
+                return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+          };
 
+
+        let sectionTotal = 80;
+
+        let percentageValue = {
+            german: this.props.progress.german / sectionTotal * 100,
+            portuguese: this.props.progress.portuguese / sectionTotal * 100,
+            polish: this.props.progress.polish / sectionTotal * 100,
+            spanish: this.props.progress.spanish / sectionTotal * 100,
+            swedish: this.props.progress.swedish / sectionTotal * 100,
+            italian: this.props.progress.italian / sectionTotal * 100,
+            french: this.props.progress.french / sectionTotal * 100        
+        }
 
         return (
-            
-            <div className="center">
-            <h3 className="latin">What is the {topLanguage} phrase:</h3>
-            <div className="question-list card center">
-                <div className="question">
-                   <p>{currentQuestion}</p>
 
-                </div>
-                <button className="view-leaderboard btn daisy"   ><a className="center"  onClick={this.onFlipLanguage} >Flip!</a></button>
+        <div className="jumbotron">
+            <div className="container">
+                <h1>What is the {topLanguage.toProperCase()} phrase:</h1>
+                <p>"{currentQuestion}"</p>
+                <div className="container">
+                    <div className="row">
+                        <div className="col">   
+                            <p><a className="btn btn-primary btn-lg" href="#" role="button" onClick={this.onFlipLanguage}>Flip ↕</a></p>
+                        </div>
+                        <div className="col">     
+
+                        </div>
+                    </div>   
                 </div>
             </div>
+        </div>
+
+
+
+
+
             
         );
     }
@@ -66,7 +86,8 @@ const mapStateToProps = (state, props) => ({
     name: state.name,
     answerHistory: state.answerHistory,
     selectedLanguage: state.selectedLanguage,
-    languageFlipper: state.languageFlipper
+    languageFlipper: state.languageFlipper,
+    progress: state.progress
 });
 
 export default connect(mapStateToProps)(QuestionPage);

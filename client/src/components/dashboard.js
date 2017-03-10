@@ -28,12 +28,9 @@ export class Dashboard extends React.Component {
             this.props.dispatch(actions.mapUserToStore(userData))
             return "next"
         }).then(next => {
-            console.log('we have q histortory')
             let questionHistoryObj = this.props.questionHistory;
             
             for (let languages in questionHistoryObj) {
-                console.log('WHAT IS THIS ', languages)
-                console.log('IN THE LANGUAGES', questionHistoryObj[languages])
                 let mValueTally = 0;
                 let mValueMax = 0;
                 
@@ -52,51 +49,6 @@ export class Dashboard extends React.Component {
         })
     }
         
-      
-             
-
-
-
-
-
-     
-    
-        // if (this.props.questionHistory) {
- 
-        // console.log('we have q histortory')
-        // let questionHistoryObj = this.props.questionHistory;
-
-        //     let returnObj = {
-        //         german: null,
-        //         swedish: null,
-        //         polish: null,
-        //         portuguese: null,
-        //         italian: null,
-        //         french: null,
-        //         spanish: null
-        //     }
-        //     for (let languages in questionHistoryObj) {
-        //         console.log('IN THE LANGUAGES', questionHistoryObj[languages])
-        //         let mValueTally = 0;
-        //         let mValueMax = 0;
-        //         for (let i = 0; i < questionHistoryObj[languages].length; i++) {
-        //             console.log('TALLYING')
-        //             mValueTally += questionHistoryObj[languages][i].mValue;
-        //             mValueMax += 5;
-        //             console.log('mValueMax', mValueMax)
-        //             console.log('mValueTally', mValueTally)
-        //         }
-        //         console.log('FINAL M VALUES ', mValueTally, ' OUT OF ' , mValueMax)
-        //         let percentProgress = (mValueTally - 20) / (mValueMax - 20);
-        //         returnObj[languages] = percentProgress
-        //         console.log(returnObj)
-        //     }
-        // }  
-        // this.props.dispatch(actions.updateProgress(returnObj));
-    
-
-
-
     onSubmit(event) {
   		event.preventDefault();
         let language = (this.refs.language).value.trim();
@@ -121,7 +73,75 @@ export class Dashboard extends React.Component {
     }
 
     return (
-        <div>
+        
+
+
+    <div className="site-wrapper gr__getbootstrap_com">
+
+      <div className="site-wrapper-inner">
+
+        <div className="cover-container">
+
+          <div className="masthead clearfix">
+            <div className="inner yellow">
+              <h3 className="masthead-brand">Hey {userName.slice(0, userName.indexOf(" "))}!</h3>
+              <nav>
+                <ul className="nav masthead-nav">
+                  <li className="active"><a  onClick={this.updateUserInDatabase} href={`${SERVER_ROOT}/auth/logout`}>Log out</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <div className="inner cover">
+            <h1 className="cover-heading">Welcome to <b>World Traveler</b> </h1>
+            <p className="lead">Pick a new language or continue learning a previous one.</p>             
+                <select placeholder="Language=" name="colour1" id='language' className="colour1 form-group" value={this.value} ref="language" onChange={this.onSubmit}>
+                    <option key={0} value="" disabled selected className="center-input-text">Select ↕</option>
+                    <option key={1} value="german" className="center-input-text">German</option>
+                    <option key={2} value="swedish" className="center-input-text">Swedish</option>
+                    <option key={3} value="polish" className="center-input-text">Polish</option>
+                    <option key={4} value="portuguese" className="center-input-text">Portuguese</option>
+                    <option key={5} value="italian" className="center-input-text">Italian</option>
+                    <option key={6} value="french" className="center-input-text">French</option>
+                    <option key={7} value="spanish" className="center-input-text">Spanish</option>                                                
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    );
+}}
+
+    const mapStateToProps = (state, props) => ({
+        _id: state._id,
+        googleId: state.googleId,
+        accessToken: state.accessToken,
+        questionHistory: state.questionHistory,
+        email: state.email,
+        name: state.name,
+        answerHistory: state.answerHistory,
+        feedback: state.feedback,
+        previousAnswer: state.previousAnswer,
+        toggleLeaderboard: state.toggleLeaderboard,
+        selectedLanguage: state.selectedLanguage,
+        languageFlipper: state.languageFlipper,
+        progress: state.progress
+    });
+
+    export default connect(mapStateToProps)(Dashboard);
+
+          <div className="mastfoot">
+            <div className="inner yellow">
+              <p>JFK</p>
+            </div>
+          </div>
+
+
+{/*
+<div>
             <div className="topBar">
                 <div className="top-left">
                     <h3>Hey {userName.slice(0, userName.indexOf(" "))}!</h3>
@@ -188,26 +208,4 @@ export class Dashboard extends React.Component {
                             <div className="w3-container w3-blue w3-round" style={{width: `${percentageValue.french}%`}}>{Math.round(percentageValue.french)}%</div>
                         </div>
             </div>
-        </div>
-
-
-        );
-    }}
-
-    const mapStateToProps = (state, props) => ({
-        _id: state._id,
-        googleId: state.googleId,
-        accessToken: state.accessToken,
-        questionHistory: state.questionHistory,
-        email: state.email,
-        name: state.name,
-        answerHistory: state.answerHistory,
-        feedback: state.feedback,
-        previousAnswer: state.previousAnswer,
-        toggleLeaderboard: state.toggleLeaderboard,
-        selectedLanguage: state.selectedLanguage,
-        languageFlipper: state.languageFlipper,
-        progress: state.progress
-    });
-
-    export default connect(mapStateToProps)(Dashboard);
+        </div>*/}

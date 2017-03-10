@@ -30,32 +30,47 @@ export class TopNav extends React.Component {
 
         let userName = this.props.name;
 
-        let currentSessionQuestionCount = this.props.sessionHistory.questions;
-        let currentSessionCorrectCount = this.props.sessionHistory.correctAnswers;
+        let sectionTotal = 80;
 
-        let lifetimeQuestionCount = this.props.answerHistory.questions;
-        let lifetimeCorrectCount = this.props.answerHistory.correctAnswers;
+        let percentageValue = {
+            german: this.props.progress.german / sectionTotal * 100,
+            portuguese: this.props.progress.portuguese / sectionTotal * 100,
+            polish: this.props.progress.polish / sectionTotal * 100,
+            spanish: this.props.progress.spanish / sectionTotal * 100,
+            swedish: this.props.progress.swedish / sectionTotal * 100,
+            italian: this.props.progress.italian / sectionTotal * 100,
+            french: this.props.progress.french / sectionTotal * 100        
+        }
           
 
       return (
-        <div> 
-            <div className="topBar">
-                <div className="top-left">
-                    <h3>Hey {userName.slice(0, userName.indexOf(" "))}!</h3>
+
+        <nav className="navbar navbar-inverse navbar-fixed-top">
+            <div className="container">
+                <div className="navbar-header">
+                <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span className="sr-only">Toggle navigation</span>
+                    <span className="icon-bar"></span>
+                    <span className="icon-bar"></span>
+                    <span className="icon-bar"></span>
+                </button>
+                    <a className="navbar-brand" href="#">World Traveler</a>
+                    <a className="navbar-brand" href="#">Hey {userName.slice(0, userName.indexOf(" "))}!</a>
+                    <a className="navbar" >
+                        <div className="progress questionPageBar" >
+                            <div className="bar" style={{width: `${percentageValue.language}%`}}> {percentageValue.language}%</div>
+                        </div>
+                    </a>
                 </div>
-                <div className="top-center">
-                    <h1 className="lastingLatium">World Traveler</h1>
+                <div id="navbar" className="navbar-collapse collapse">
+                    <form className="navbar-form navbar-right">
+                        <button className="btn btn-success"   ><a  onClick={this.toggleDashboard} >Dashboard</a></button>  
+                        <button  className="btn btn-success"><a onClick={this.updateUserInDatabase} href={`${SERVER_ROOT}/auth/logout`}>Sign out</a></button>
+                    </form>
                 </div>
-                <div className="top-right">
-                    <button className="view-leaderboard btn daisy"   ><a className="center"  onClick={this.toggleDashboard} >Dashboard</a></button>                
-                    <button className="log-out btn daisy" ><a className="center"  onClick={this.updateUserInDatabase} href={`${SERVER_ROOT}/auth/logout`}>Log Out</a></button>
-                </div>          
-            </div>           
-            <div className="current-score">       
-                <p >Your current session score is {currentSessionCorrectCount} out of {currentSessionQuestionCount} </p>
-                <p >Your lifetime score is {lifetimeCorrectCount} out of {lifetimeQuestionCount} </p>
-            </div> 
-        </div>   
+            </div>
+        </nav>
+
   );
 }}
 
@@ -69,7 +84,8 @@ const mapStateToProps = (state, props) => ({
     name: state.name,
     answerHistory: state.answerHistory,
     sessionHistory: state.sessionHistory,
-    toggleLeaderboard: state.toggleLeaderboard
+    toggleLeaderboard: state.toggleLeaderboard,
+    progress: state.progress
 
 });
 

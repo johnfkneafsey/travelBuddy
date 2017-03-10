@@ -39,8 +39,6 @@ const initialState = {
 export const mainReducer = (state= initialState, action) => {
     if (action.type === actions.MAP_USER_TO_STORE) {
         setTimeout(()=> { console.log(store.getState(), "THIS IS THE MAP_USER_TO_STORE GETSTATE()")}, 3000);
-     //   console.log('QUESTION HISTORY IN REDUCER ', action.userData.questionHistory);
-     //   console.log('QUESTION HISTORY IN REDUCER  QUESTION ', action.userData.questionHistory[0].question);
         return update(state, {
             _id: {$set: action.userData._id},
             googleId: {$set: action.userData.googleId},                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
@@ -59,17 +57,9 @@ export const mainReducer = (state= initialState, action) => {
         let _array = action.questionHistory;
         let  _userAnswer = action.userAnswer;
         let _flipper = action.flipper;
-        console.log('_language', _language);
-        console.log('_array',_array);
-        console.log('_userAnswer', _userAnswer);
-        console.log('_flipper',_flipper);
-        
-        
         let sortedQuestionHistory;
-            console.log('INSIDE ALGO' , _array[0].answer)
 
             if (_flipper % 2 === 0) {
-                console.log('answer was ANSWER', _array[0].answer)
                 if (_userAnswer === _array[0].answer) {
                     ++_array[0].mValue;
                 }  
@@ -80,7 +70,6 @@ export const mainReducer = (state= initialState, action) => {
                 sortedQuestionHistory =  _array;
             } else {
                 if (_userAnswer === _array[0].question) {
-                console.log('answer was QUESTION', _array[0].question)
                     ++_array[0].mValue;
                 }  
                 else {
@@ -90,11 +79,6 @@ export const mainReducer = (state= initialState, action) => {
                 sortedQuestionHistory =  _array;     
             }           
         
-    
-
-        // let sortedquestionHistory = spacedAlgo(action.questionHistory, action.userAnswer, action.flipper)
-        // console.log('THIS SHOULD BE A SORTED ARRAY ', sortedquestionHistory)
-        // returns a sorted questionHistory array with updated mValue
         return update(state, {
             questionHistory: {[_language]: {$set: sortedQuestionHistory}}
         })
