@@ -55,12 +55,7 @@ export class TopNav extends React.Component {
                     <span className="icon-bar"></span>
                 </button>
                     <a className="navbar-brand" href="#">World Traveler</a>
-                    <a className="navbar-brand" href="#">Hey {userName.slice(0, userName.indexOf(" "))}!</a>
-                    <a className="navbar" >
-                        <div className="progress questionPageBar" >
-                            <div className="bar" style={{width: `${percentageValue.language}%`}}> {percentageValue.language}%</div>
-                        </div>
-                    </a>
+                    <a className="navbar-brand title_message" href="#">Hey {userName.slice(0, userName.indexOf(" "))}!</a>
                 </div>
                 <div id="navbar" className="navbar-collapse collapse">
                     <form className="navbar-form navbar-right">
@@ -84,8 +79,8 @@ const mapStateToProps = (state, props) => ({
     name: state.name,
     answerHistory: state.answerHistory,
     sessionHistory: state.sessionHistory,
-    toggleLeaderboard: state.toggleLeaderboard,
-    progress: state.progress
+    progress: state.progress,
+    selectedLanguage: state.selectedLanguage,
 
 });
 
@@ -93,8 +88,5 @@ export default connect(mapStateToProps)(TopNav);
 
 
 
-
-
-// -Styling
 
 

@@ -72,10 +72,8 @@ export class App extends React.Component {
         return (
 
             <div>
-                <TopNav />
                 <div className="parent">
                 <QuestionPage />
-                <AnswerInput />
                 </div>
             </div>
         )

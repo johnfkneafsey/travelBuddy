@@ -4,16 +4,34 @@ import {SERVER_ROOT} from '../config';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 import Store from '../store';
+import AnswerInput from './answer-input';
 
 export class QuestionPage extends React.Component {
     constructor(props) {
         super(props);
         this.onFlipLanguage = this.onFlipLanguage.bind(this);
+	    this.updateUserInDatabase = this.updateUserInDatabase.bind(this);
+        this.startOver = this.startOver.bind(this);
+        this.toggleDashboard = this.toggleDashboard.bind(this);
 
     }
 
     onFlipLanguage() {
         this.props.dispatch(actions.flipLanguage());
+    }
+
+    updateUserInDatabase() {
+        this.props.dispatch(actions.updateUserInDatabase(this.props)) 
+    }
+
+    startOver() {
+        this.props.dispatch(actions.startOver());
+    }
+
+    toggleDashboard () {
+        this.props.dispatch(actions.selectedLanguage(null));
+        this.props.dispatch(actions.toggleDashboard());
+        this.props.dispatch(actions.updateUserInDatabase(this.props))
     }
 
 
@@ -51,23 +69,37 @@ export class QuestionPage extends React.Component {
 
         return (
 
-        <div className="jumbotron">
-            <div className="container">
-                <h1>What is the {topLanguage.toProperCase()} phrase:</h1>
-                <p>"{currentQuestion}"</p>
-                <div className="container">
-                    <div className="row">
-                        <div className="col">   
-                            <p><a className="btn btn-primary btn-lg" href="#" role="button" onClick={this.onFlipLanguage}>Flip ↕</a></p>
-                        </div>
-                        <div className="col">     
+    <div className="container">
+      <div className="header clearfix">
+        <nav>
+          <ul className="nav nav-pills pull-right">
+            <li className="rightIcons" role="presentation" ><a onClick={this.toggleDashboard} >Dashboard</a></li>
+            <li className="rightIcons" role="presentation"><a onClick={this.updateUserInDatabase} href={`${SERVER_ROOT}/auth/logout`} >Log out</a></li>
+          </ul>
 
-                        </div>
-                    </div>   
-                </div>
-            </div>
+          <ul className="nav nav-pills pull-left">
+            <li className="rightIcons" role="presentation" ><h3 className="leftIcons">World Traveler</h3></li>
+          </ul>
+        </nav>
+
+      </div>
+
+      <h4 className="topLanguage" >What is the {topLanguage.toProperCase()} phrase:</h4>
+      <div className="jumbotron">
+        <h1 className="phrase" >"{currentQuestion}"</h1>
+        <div className="col">   
+            <a className="btn   flipButton" href="#" role="button" onClick={this.onFlipLanguage}>Flip ↕</a>
         </div>
+      </div>
 
+
+      <div className="row marketing">
+        <AnswerInput />
+      </div>
+
+
+
+    </div>
 
 
 
@@ -87,7 +119,8 @@ const mapStateToProps = (state, props) => ({
     answerHistory: state.answerHistory,
     selectedLanguage: state.selectedLanguage,
     languageFlipper: state.languageFlipper,
-    progress: state.progress
+    progress: state.progress,
+
 });
 
 export default connect(mapStateToProps)(QuestionPage);

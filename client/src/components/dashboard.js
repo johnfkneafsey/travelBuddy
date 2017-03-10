@@ -93,8 +93,8 @@ export class Dashboard extends React.Component {
             </div>
           </div>
 
-          <div className="inner cover">
-            <h1 className="cover-heading">Welcome to <b>World Traveler</b> </h1>
+          <div className="inner cover centerDashboard">
+            <h1 className="cover-heading">Welcome to World Traveler </h1>
             <p className="lead">Pick a new language or continue learning a previous one.</p>             
                 <select placeholder="Language=" name="colour1" id='language' className="colour1 form-group" value={this.value} ref="language" onChange={this.onSubmit}>
                     <option key={0} value="" disabled selected className="center-input-text">Select ↕</option>

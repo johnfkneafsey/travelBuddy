@@ -29,10 +29,10 @@ export class AnswerInput extends React.Component {
     this.props.dispatch(actions.previousAnswer(currentAnswer));
     this.props.dispatch(actions.incrementQuestionCount());
     if (userGuess === currentAnswer) {
-      this.props.dispatch(actions.feedback("That's correct, the answer was "))
+      this.props.dispatch(actions.feedback("That's correct, the answer was: "))
       this.props.dispatch(actions.incrementCorrectCount());
     } else {
-      this.props.dispatch(actions.feedback("That's incorrect, the answer was "))
+      this.props.dispatch(actions.feedback("That's incorrect, the answer was: "))
     }
     this.props.dispatch(actions.submitUserAnswerToAlgo(this.props.questionHistory[language], userGuess, language, this.props.languageFlipper))
     this.refs.userGuess.value = "";
@@ -53,38 +53,48 @@ export class AnswerInput extends React.Component {
     let lifetimeQuestionCount = this.props.answerHistory.questions;
     let lifetimeCorrectCount = this.props.answerHistory.correctAnswers;
 
+    let sectionTotal = 80;
+
+    let percentageValue = {
+        german: this.props.progress.german / sectionTotal * 100,
+        portuguese: this.props.progress.portuguese / sectionTotal * 100,
+        polish: this.props.progress.polish / sectionTotal * 100,
+        spanish: this.props.progress.spanish / sectionTotal * 100,
+        swedish: this.props.progress.swedish / sectionTotal * 100,
+        italian: this.props.progress.italian / sectionTotal * 100,
+        french: this.props.progress.french / sectionTotal * 100        
+    }
+
     String.prototype.toProperCase = function () {
           return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
     };
 
     return (
 
-
-    <div className="container">
-   
-      <div className="row">
-        <div className="col-md-4">
-          <h2>...in {bottomLanguage.toProperCase()}?</h2>
-          <form onSubmit={this.submitAnswer}>
-            <input type="text" placeholder="Enter an answer" ref="userGuess" />
-            <button className="btn btn-default"  >Submit</button>
-          </form>
+      <div>
+        <div className="col-lg-6">
+          <h4>...in {bottomLanguage.toProperCase()}?</h4>
+          <div className="form-style-4">
+            <form onSubmit={this.submitAnswer}>
+              <input type="text" placeholder="Enter an answer" ref="userGuess" className="textInput" />
+              <br></br>
+              <button className="btn flipButton"  >Submit</button>
+            </form>
         </div>
-        <div className="col-md-4">
+        </div>
+        <div className="col-lg-6">
           <h2></h2>
           <p>{this.props.feedback}</p>
-          <p>{this.props.previousAnswer}</p>
-       </div>
-        <div className="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+          <p>{'"' + this.props.previousAnswer + '"'}</p>
         </div>
-      </div>
-      <hr></hr>
-      <footer className="footerStyle"> 
-        <p>JFK</p>
-      </footer>
-    </div>
+        <div className="col-lg-6">
+          <div className="progress questionPageBar" >
+              <div className="bar" style={{width: `${percentageValue.language}%`}}> {percentageValue.language}%</div>
+          </div>
+        </div>
+      </div>  
+      
+  
 
     );
   }
@@ -103,7 +113,8 @@ const mapStateToProps = (state, props) => ({
     selectedLanguage: state.selectedLanguage,
     languageFlipper: state.languageFlipper,
     sessionHistory: state.sessionHistory,
-    answerHistory: state.answerHistory
+    answerHistory: state.answerHistory,
+    progress: state.progress
 });
 
 export default connect(mapStateToProps)(AnswerInput);
