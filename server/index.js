@@ -21,7 +21,6 @@ app.use(function(req, res, next) {
 
 app.use(passport.initialize());
 
-
 app.use(function(req, res, next) {
    res.setHeader('Access-Control-Allow-Origin', '*');
    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT ,DELETE');
@@ -87,7 +86,6 @@ passport.use(
 passport.use(
     new BearerStrategy(
         (accessToken, cb) => {
-
         User.findOne({accessToken: accessToken}, function(err,user){
             if(err){
                 console.log('ERROR WITH BEARER ');

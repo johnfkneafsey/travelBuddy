@@ -2,6 +2,15 @@
   width: 25%;
 }
 
+.yellowButton {
+  background-color: rgb(247, 206, 62) !important;
+  color: white;
+}
+
+.yellowText {
+  color: rgb(247, 206, 62) !important;
+}
+
 .bar {
   text-align: center;
 }
@@ -64,7 +73,11 @@ body {
   display: table-cell;
   vertical-align: top;
   text-align: center;
-
+  background-image: url("http://7-themes.com/data_images/out/13/6811026-street-background.jpg") !important;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: 2600px 1400px;
 }
 .cover-container {
   margin-right: auto;

@@ -110,7 +110,7 @@ export class Dashboard extends React.Component {
           <br></br>
           <br></br>
           <br></br>
-          <h3>Learning Mastery</h3>
+          <h3>{userName.slice(0, userName.indexOf(" "))}'s Personal Progress</h3>
 
           <br></br>
 

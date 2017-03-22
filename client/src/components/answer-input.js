@@ -85,7 +85,7 @@ export class AnswerInput extends React.Component {
 
         <div className="col-lg-6">
           <p>{this.props.feedback}</p>
-          <p>{this.props.previousAnswer}</p>
+          <p className="yellowText">{this.props.previousAnswer}</p>
         </div>
         <div className="col-lg-6">
           <div className="form-style-4">
@@ -97,7 +97,7 @@ export class AnswerInput extends React.Component {
           </div>
         </div>
         <div className="col-lg-6">
-          <h4>Mastery</h4>
+          <h4>Progress</h4>
           <div className="progress transparentProgress">
             <div className="progress-bar yellowBar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style={progressBarStyle} >
             {percentageValue[language]}%

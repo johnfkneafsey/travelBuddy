@@ -25,5 +25,4 @@ module.exports = {
     CLIENT_ROOT
 };
 
-
 // mongodb://rep-times-3:rep-times-3@ds157539.mlab.com:57539/spaced-repetition-capstone
